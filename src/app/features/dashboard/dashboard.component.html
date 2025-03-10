@@ -1,0 +1,69 @@
+<div class="dashboard-container animate__animated animate__fadeIn">
+    <h2 class="text-center mb-4"><i class="bi bi-speedometer2"></i> Broker Dashboard</h2>
+  
+    <!-- Quote Overview Stats -->
+    <div class="stats-container">
+      <div class="stat-card bg-primary">
+        <h4>Total Quotes</h4>
+        <p>{{ quotes.length }}</p>
+      </div>
+      <div class="stat-card bg-success">
+        <h4>Approved</h4>
+        <p>{{ countQuotes('Approved') }}</p>
+      </div>
+      <div class="stat-card bg-warning">
+        <h4>Pending</h4>
+        <p>{{ countQuotes('Pending') }}</p>
+      </div>
+      <div class="stat-card bg-danger">
+        <h4>Rejected</h4>
+        <p>{{ countQuotes('Rejected') }}</p>
+      </div>
+    </div>
+  
+    <!-- AI-Powered Smart Recommendations -->
+    <div class="ai-recommendations shadow-lg">
+      <h4><i class="bi bi-lightbulb"></i> AI Smart Recommendations</h4>
+      <ul>
+        <li *ngFor="let rec of recommendations">
+          <i class="bi bi-check-circle text-success"></i> {{ rec }}
+        </li>
+      </ul>
+    </div>
+  
+    <!-- Recent Quotes Table -->
+    <div class="table-responsive">
+      <table class="table table-hover shadow-sm">
+        <thead class="table-primary">
+          <tr>
+            <th>Customer</th>
+            <th>Insurance Type</th>
+            <th>Premium ($)</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let quote of filteredQuotes()">
+            <td>{{ quote.customerName }}</td>
+            <td>{{ quote.insuranceType }}</td>
+            <td>{{ quote.premium }}</td>
+            <td>
+              <span class="badge bg-success" *ngIf="quote.status === 'Approved'">Approved</span>
+              <span class="badge bg-warning" *ngIf="quote.status === 'Pending'">Pending</span>
+              <span class="badge bg-danger" *ngIf="quote.status === 'Rejected'">Rejected</span>
+            </td>
+            <td>
+              <button class="btn btn-info btn-sm me-2" (click)="viewQuote(quote.id)">
+                <i class="bi bi-eye"></i> View
+              </button>
+              <button class="btn btn-danger btn-sm" (click)="deleteQuote(quote.id)">
+                <i class="bi bi-trash"></i> Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

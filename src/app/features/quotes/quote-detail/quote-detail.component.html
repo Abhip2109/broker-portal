@@ -1,0 +1,28 @@
+<div class="quote-details-container animate__animated animate__fadeIn">
+    <div class="quote-details-box shadow-lg">
+      <h2 class="text-center mb-4"><i class="bi bi-receipt"></i> Quote Details</h2>
+  
+      <div class="quote-info">
+        <p><strong>Customer:</strong> {{ quote.customerName }}</p>
+        <p><strong>Insurance Type:</strong> {{ quote.insuranceType }}</p>
+        <p><strong>Premium:</strong> ${{ quote.premium }}</p>
+        <p><strong>Status:</strong> <span class="badge" [class.bg-success]="quote.status === 'Approved'"
+            [class.bg-warning]="quote.status === 'Pending'" [class.bg-danger]="quote.status === 'Rejected'">
+            {{ quote.status }}
+          </span></p>
+      </div>
+  
+      <!-- AI-Driven Recommendations -->
+      <div *ngIf="recommendations.length > 0" class="ai-recommendations">
+        <h4><i class="bi bi-lightbulb"></i> Smart Recommendations</h4>
+        <ul>
+          <li *ngFor="let rec of recommendations">
+            <i class="bi bi-check-circle text-success"></i> {{ rec }}
+          </li>
+        </ul>
+      </div>
+  
+      <button class="btn btn-primary mt-3 w-100" (click)="goBack()">Back to Quotes</button>
+    </div>
+  </div>
+  
