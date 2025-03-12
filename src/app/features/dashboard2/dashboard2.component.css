@@ -1,0 +1,61 @@
+.dashboard-container {
+    display: flex;
+  }
+  
+  .dashboard-content {
+    margin-left: 250px;
+    padding: 20px;
+    width: 100%;
+  }
+  
+  .dashboard-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .stats-container {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .card-stats {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+  }
+  
+  .card-icon {
+    font-size: 2.5rem;
+    padding: 10px;
+    border-radius: 50%;
+  }
+  
+  .bg-warning {
+    background: #ffc107;
+  }
+  
+  .bg-success {
+    background: #28a745;
+  }
+  
+  .bg-danger {
+    background: #dc3545;
+  }
+  
+  .badge {
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  
+  .badge-success {
+    background: #28a745;
+    color: white;
+  }
+  
+  .badge-danger {
+    background: #dc3545;
+    color: white;
+  }
+  

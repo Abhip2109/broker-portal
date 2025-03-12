@@ -1,0 +1,88 @@
+@import 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css';
+
+.home-container {
+  text-align: center;
+  color: #333;
+}
+
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  padding: 80px 20px;
+  color: white;
+}
+
+.hero-section h1 {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.hero-section p {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.btn-primary {
+  font-size: 1.2rem;
+  padding: 15px 30px;
+}
+
+/* Features Section */
+.features-section {
+  padding: 60px 20px;
+  background: #f8f9fa;
+}
+
+.features-grid {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.feature-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out;
+}
+
+.feature-card:hover {
+  transform: scale(1.05);
+}
+
+.feature-card i {
+  font-size: 2.5rem;
+  color: #ff4e50;
+  margin-bottom: 10px;
+}
+
+/* Testimonial Section */
+.testimonial-section {
+  background: #fff5f5;
+  padding: 60px 20px;
+}
+
+.testimonial {
+  max-width: 600px;
+  margin: auto;
+  font-style: italic;
+  font-size: 1.3rem;
+}
+
+/* CTA Section */
+.cta-section {
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  padding: 50px 20px;
+  color: white;
+}
+
+.cta-section h2 {
+  font-size: 2.5rem;
+}
+
+.btn-warning {
+  font-size: 1.2rem;
+  padding: 15px 30px;
+}

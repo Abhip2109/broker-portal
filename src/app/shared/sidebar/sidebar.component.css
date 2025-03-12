@@ -1,0 +1,57 @@
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: linear-gradient(135deg, #007bff, #6610f2);
+    color: white;
+    position: fixed;
+    left: 0;
+    top: 60px; /* ✅ Moves sidebar below the navbar */
+    padding: 20px;
+    transition: all 0.4s ease-in-out;
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* ✅ Ensures sidebar is always above other elements */
+  }
+  
+  .sidebar.collapsed {
+    width: 80px;
+  }
+  
+  .menu {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .menu li {
+    margin: 15px 0;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .menu li:hover {
+    transform: translateX(10px);
+  }
+  
+  .menu li a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .menu-toggle {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    position: absolute;
+    bottom: 20px; /* ✅ Moved further down */
+    left: 50%;
+    transform: translateX(-50%);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .menu-toggle:hover {
+    transform: translateX(-50%) scale(1.1);
+  }
+  

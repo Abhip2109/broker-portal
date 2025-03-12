@@ -3,15 +3,16 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LeaderboardComponent } from '../leaderboard/leaderboard.component';
+import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-dashboard2',
   standalone: true,
-  imports: [CommonModule, FormsModule,LeaderboardComponent],
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  imports: [CommonModule, FormsModule,LeaderboardComponent,SidebarComponent],
+  templateUrl: './dashboard2.component.html',
+  styleUrls: ['./dashboard2.component.css']
 })
-export class DashboardComponent {
+export class Dashboard2Component {
   searchQuery: string = '';
   sortOption: string = 'date';
   recommendations: string[] = [];
@@ -25,6 +26,20 @@ export class DashboardComponent {
   constructor(private router: Router) {
     this.generateRecommendations();
   }
+
+  getStatusClass(status: string): string {
+    switch (status.toLowerCase()) {
+      case 'approved':
+        return 'badge-success';
+      case 'pending':
+        return 'badge-warning';
+      case 'rejected':
+        return 'badge-danger';
+      default:
+        return 'badge-secondary';
+    }
+  }
+  
 
   countQuotes(status: string): number {
     return this.quotes.filter(q => q.status === status).length;

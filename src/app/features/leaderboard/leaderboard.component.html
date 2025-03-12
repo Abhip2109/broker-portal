@@ -1,0 +1,26 @@
+<div class="leaderboard-container animate__animated animate__fadeIn">
+    <h2 class="text-center"><i class="bi bi-trophy"></i> Top Brokers</h2>
+  
+    <div class="leaderboard">
+      <div class="leaderboard-header">
+        <span>#</span>
+        <span>Broker</span>
+        <span>Policies Closed</span>
+        <span>Commission ($)</span>
+        <span>Badge</span>
+      </div>
+  
+      <div class="leaderboard-row animate__animated animate__zoomIn" 
+           *ngFor="let broker of brokers; let i = index" 
+           [ngClass]="{'top-rank': i < 3}">
+        <span class="rank">{{ i + 1 }}</span>
+        <span class="broker-name">{{ broker.name }}</span>
+        <span>{{ broker.policies }}</span>
+        <span>${{ broker.commission }}</span>
+        <span>
+          <i [ngClass]="getBadgeClass(i)"></i>
+        </span>
+      </div>
+    </div>
+  </div>
+  

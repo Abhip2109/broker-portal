@@ -1,0 +1,15 @@
+<div class="sidebar" [ngClass]="{'collapsed': isCollapsed}">
+    <ul class="menu">
+      <li><a routerLink="/dashboard"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+      <li><a routerLink="/profile"><i class="bi bi-person"></i> Broker Profile</a></li>
+      <li><a routerLink="/quotes"><i class="bi bi-file-earmark-text"></i> Quote List</a></li>
+      <li><a routerLink="/notifications"><i class="bi bi-bell"></i> Notifications</a></li>
+      <li><a routerLink="/leaderboard"><i class="bi bi-trophy"></i> Leaderboard</a></li>
+    </ul>
+  
+    <!-- 🔥 Moved Hamburger Menu Downwards -->
+    <button class="menu-toggle" (click)="toggleSidebar()">
+      <i class="bi bi-list"></i>
+    </button>
+  </div>
+  

@@ -1,0 +1,29 @@
+<!-- Floating Chatbot -->
+<div class="chatbot-container">
+    <!-- Chat Icon -->
+    <button class="chatbot-toggle animate__animated animate__pulse animate__infinite" (click)="toggleChat()">
+      <i class="bi bi-chat-dots"></i>
+    </button>
+  
+    <!-- Chat Window -->
+    <div class="chat-window animate__animated animate__fadeInUp" *ngIf="chatOpen">
+      <div class="chat-header">
+        <h4>AI Assistant</h4>
+        <button class="close-btn" (click)="toggleChat()">&times;</button>
+      </div>
+  
+      <!-- Chat Messages -->
+      <div class="chat-messages" #chatMessages>
+        <div *ngFor="let message of messages" [ngClass]="{'user-message': message.fromUser, 'bot-message': !message.fromUser}">
+          {{ message.text }}
+        </div>
+      </div>
+  
+      <!-- Chat Input -->
+      <div class="chat-input">
+        <input type="text" [(ngModel)]="userInput" placeholder="Ask me anything..." (keyup.enter)="sendMessage()" />
+        <button (click)="sendMessage()"><i class="bi bi-send"></i></button>
+      </div>
+    </div>
+  </div>
+  
