@@ -2,8 +2,17 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-// ✅ Define a type for the quote properties
+type BooleanQuoteOptions = 'carInsurance' | 'petInsurance' | 'fireProtection' | 'securityCameras' | 'gatedCommunity';
+
 interface QuoteOptions {
+  fullName: string;
+  email: string;
+  phone: string;
+  address: string;
+  propertyType: string;
+  sqFootage: number;
+  yearBuilt: number;
+  bedrooms: number;
   carInsurance: boolean;
   petInsurance: boolean;
   fireProtection: boolean;
@@ -20,11 +29,19 @@ interface QuoteOptions {
 })
 export class QuoteFormComponent {
   step = 1;
-  basePremium = 500; // Base premium for Renter's Insurance
+  totalSteps = 5;
+  basePremium = 500;
   finalPremium = this.basePremium;
 
-  // ✅ Use the defined interface instead of index signature
   quote: QuoteOptions = {
+    fullName: '',
+    email: '',
+    phone: '',
+    address: '',
+    propertyType: '',
+    sqFootage: 0,
+    yearBuilt: 0,
+    bedrooms: 0,
     carInsurance: false,
     petInsurance: false,
     fireProtection: false,
@@ -32,20 +49,18 @@ export class QuoteFormComponent {
     gatedCommunity: false
   };
 
-  // ✅ Now, TypeScript recognizes these properties and allows dot notation
-  toggleInsurance(type: keyof QuoteOptions) {
+  toggleInsurance(type: BooleanQuoteOptions) {
     this.quote[type] = !this.quote[type];
     this.calculatePremium();
   }
 
-  toggleDiscount(feature: keyof QuoteOptions) {
+  toggleDiscount(feature: BooleanQuoteOptions) {
     this.quote[feature] = !this.quote[feature];
     this.calculatePremium();
   }
 
   calculatePremium() {
     let premium = this.basePremium;
-
     if (this.quote.carInsurance) premium += 200;
     if (this.quote.petInsurance) premium += 100;
 
@@ -58,8 +73,14 @@ export class QuoteFormComponent {
   }
 
   nextStep() {
-    if (this.step < 3) {
+    if (this.step < this.totalSteps) {
       this.step++;
+    }
+  }
+
+  prevStep() {
+    if (this.step > 1) {
+      this.step--;
     }
   }
 

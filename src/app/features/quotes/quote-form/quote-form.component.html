@@ -1,49 +1,69 @@
 <div class="quote-container animate__animated animate__fadeIn">
-    <div class="quote-box shadow-lg">
-      <h2 class="text-center mb-4"><i class="bi bi-shield-check"></i> Let's Get You Covered</h2>
-  
-      <!-- Step 1: Select Insurance Types -->
-      <div class="quote-step" *ngIf="step === 1">
-        <p class="question">What type of insurance does the broker want?</p>
-  
-        <div class="insurance-options">
-          <button class="btn insurance-btn active">Renter's Insurance (Mandatory)</button>
-          <button class="btn insurance-btn" [class.active]="quote.carInsurance" (click)="toggleInsurance('carInsurance')">
-            <i class="bi bi-car-front"></i> Car Insurance (+$200)
-          </button>
-          <button class="btn insurance-btn" [class.active]="quote.petInsurance" (click)="toggleInsurance('petInsurance')">
-            <i class="bi bi-heart"></i> Pet Insurance (+$100)
-          </button>
-        </div>
-  
-        <button class="btn btn-primary mt-3 w-100 next-btn" (click)="nextStep()">Next</button>
-      </div>
-  
-      <!-- Step 2: Safety Features -->
-      <div class="quote-step" *ngIf="step === 2">
-        <p class="question">Any safety features?</p>
-  
-        <div class="discount-options">
-          <button class="btn discount-btn" [class.active]="quote.fireProtection" (click)="toggleDiscount('fireProtection')">
-            <i class="bi bi-fire"></i> Fire Protection (-10%)
-          </button>
-          <button class="btn discount-btn" [class.active]="quote.securityCameras" (click)="toggleDiscount('securityCameras')">
-            <i class="bi bi-camera-video"></i> Security Cameras (-5%)
-          </button>
-          <button class="btn discount-btn" [class.active]="quote.gatedCommunity" (click)="toggleDiscount('gatedCommunity')">
-            <i class="bi bi-house-door"></i> Gated Community (-7%)
-          </button>
-        </div>
-  
-        <button class="btn btn-primary mt-3 w-100 next-btn" (click)="nextStep()">Next</button>
-      </div>
-  
-      <!-- Step 3: Final Quote -->
-      <div class="quote-step" *ngIf="step === 3">
-        <p class="question">Your Updated Premium:</p>
-        <h3 class="premium">${{ finalPremium }}</h3>
-        <button class="btn btn-success mt-3 w-100 btn-animated" (click)="submitQuote()">Confirm & Get Quote</button>
-      </div>
+  <div class="quote-box shadow-lg">
+    <h2 class="text-center mb-4"><i class="bi bi-shield-check"></i> Let's Get You Covered</h2>
+
+    <!-- Step 1: Personal Details -->
+    <div class="quote-step" *ngIf="step === 1">
+      <p class="question">Enter Your Personal Details:</p>
+      <input type="text" class="form-control mb-2" placeholder="Full Name" [(ngModel)]="quote.fullName">
+      <input type="email" class="form-control mb-2" placeholder="Email Address" [(ngModel)]="quote.email">
+      <input type="text" class="form-control mb-2" placeholder="Phone Number" [(ngModel)]="quote.phone">
+      <input type="text" class="form-control mb-2" placeholder="Address" [(ngModel)]="quote.address">
+      <button class="btn btn-primary mt-3 w-100 next-btn" (click)="nextStep()">Next</button>
+    </div>
+
+    <!-- Step 2: Property Details -->
+    <div class="quote-step" *ngIf="step === 2">
+      <p class="question">Property Details:</p>
+      <select class="form-control mb-2" [(ngModel)]="quote.propertyType">
+        <option value="" disabled selected>Select Property Type</option>
+        <option value="apartment">Apartment</option>
+        <option value="house">House</option>
+        <option value="condo">Condo</option>
+      </select>
+      <input type="number" class="form-control mb-2" placeholder="Square Footage" [(ngModel)]="quote.sqFootage">
+      <input type="number" class="form-control mb-2" placeholder="Year Built" [(ngModel)]="quote.yearBuilt">
+      <input type="number" class="form-control mb-2" placeholder="Number of Bedrooms" [(ngModel)]="quote.bedrooms">
+      <button class="btn btn-secondary w-100" (click)="prevStep()">Back</button>
+      <button class="btn btn-primary mt-3 w-100 next-btn" (click)="nextStep()">Next</button>
+    </div>
+
+    <!-- Step 3: Insurance Selection -->
+    <div class="quote-step" *ngIf="step === 3">
+      <p class="question">Which insurances would you like?</p>
+      <button class="btn insurance-btn active">Renter's Insurance (Mandatory)</button>
+      <button class="btn insurance-btn" [class.active]="quote.carInsurance" (click)="toggleInsurance('carInsurance')">
+        <i class="bi bi-car-front"></i> Car Insurance (+$200)
+      </button>
+      <button class="btn insurance-btn" [class.active]="quote.petInsurance" (click)="toggleInsurance('petInsurance')">
+        <i class="bi bi-heart"></i> Pet Insurance (+$100)
+      </button>
+      <button class="btn btn-secondary w-100" (click)="prevStep()">Back</button>
+      <button class="btn btn-primary mt-3 w-100 next-btn" (click)="nextStep()">Next</button>
+    </div>
+
+    <!-- Step 4: Safety Features -->
+    <div class="quote-step" *ngIf="step === 4">
+      <p class="question">Any safety features?</p>
+      <button class="btn discount-btn" [class.active]="quote.fireProtection" (click)="toggleDiscount('fireProtection')">
+        <i class="bi bi-fire"></i> Fire Protection (-10%)
+      </button>
+      <button class="btn discount-btn" [class.active]="quote.securityCameras" (click)="toggleDiscount('securityCameras')">
+        <i class="bi bi-camera-video"></i> Security Cameras (-5%)
+      </button>
+      <button class="btn discount-btn" [class.active]="quote.gatedCommunity" (click)="toggleDiscount('gatedCommunity')">
+        <i class="bi bi-house-door"></i> Gated Community (-7%)
+      </button>
+      <button class="btn btn-secondary w-100" (click)="prevStep()">Back</button>
+      <button class="btn btn-primary mt-3 w-100 next-btn" (click)="nextStep()">Next</button>
+    </div>
+
+    <!-- Step 5: Final Quote -->
+    <div class="quote-step" *ngIf="step === 5">
+      <p class="question">Your Updated Premium:</p>
+      <h3 class="premium">${{ finalPremium }}</h3>
+      <button class="btn btn-secondary w-100" (click)="prevStep()">Back</button>
+      <button class="btn btn-success mt-3 w-100 btn-animated" (click)="submitQuote()">Confirm & Get Quote</button>
     </div>
   </div>
-  
+</div>

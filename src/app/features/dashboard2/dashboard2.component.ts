@@ -1,83 +1,108 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { LeaderboardComponent } from '../leaderboard/leaderboard.component';
-import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
+import { RouterLink } from '@angular/router';
+import { BaseChartDirective } from 'ng2-charts';
+import { Chart, registerables } from 'chart.js'; // <-- Import registerables
+import { ChartData, ChartOptions, ChartType } from 'chart.js';
+
 
 @Component({
   selector: 'app-dashboard2',
   standalone: true,
-  imports: [CommonModule, FormsModule,LeaderboardComponent,SidebarComponent],
+  imports: [CommonModule, RouterLink, BaseChartDirective],
   templateUrl: './dashboard2.component.html',
   styleUrls: ['./dashboard2.component.css']
 })
-export class Dashboard2Component {
-  searchQuery: string = '';
-  sortOption: string = 'date';
-  recommendations: string[] = [];
+export class Dashboard2Component implements OnInit {
 
-  quotes = [
-    { id: 1, customerName: 'Alice Johnson', insuranceType: 'Renter’s', premium: 120, status: 'Approved' },
-    { id: 2, customerName: 'John Doe', insuranceType: 'Car', premium: 220, status: 'Pending' },
-    { id: 3, customerName: 'Emma Smith', insuranceType: 'Pet', premium: 80, status: 'Rejected' }
+  constructor(@Inject(PLATFORM_ID) private platformId: object) {
+    // Register all chart features
+    Chart.register(...registerables);
+  }
+
+  // Flag to indicate if we're in the browser
+  isBrowser = false;
+
+  // Sample stats
+  stats = [
+    { title: 'Total Quotes', value: 125, icon: 'bi-file-earmark-text', color: 'bg-primary', note: 'Updated Today' },
+    { title: 'Bound Policies', value: 80, icon: 'bi-check-circle', color: 'bg-success', note: 'This Month' },
+    { title: 'Commission Earned', value: '$4,500', icon: 'bi-currency-dollar', color: 'bg-warning', note: 'This Month' },
+    { title: 'Pending Approvals', value: 15, icon: 'bi-hourglass-split', color: 'bg-danger', note: 'Awaiting Review' }
   ];
 
-  constructor(private router: Router) {
-    this.generateRecommendations();
-  }
-
-  getStatusClass(status: string): string {
-    switch (status.toLowerCase()) {
-      case 'approved':
-        return 'badge-success';
-      case 'pending':
-        return 'badge-warning';
-      case 'rejected':
-        return 'badge-danger';
-      default:
-        return 'badge-secondary';
-    }
-  }
-  
-
-  countQuotes(status: string): number {
-    return this.quotes.filter(q => q.status === status).length;
-  }
-
-  filteredQuotes() {
-    let filtered = this.quotes.filter(q => q.customerName.toLowerCase().includes(this.searchQuery.toLowerCase()));
-
-    if (this.sortOption === 'premium') {
-      return filtered.sort((a, b) => a.premium - b.premium);
-    }
-    return filtered; // Default sort by date (static data for now)
-  }
-
-  generateRecommendations() {
-    this.recommendations = [];
-
-    for (const quote of this.quotes) {
-      if (quote.insuranceType === 'Renter’s') {
-        this.recommendations.push(`${quote.customerName} should consider adding fire protection.`);
-        this.recommendations.push(`${quote.customerName} might need theft coverage.`);
-      } else if (quote.insuranceType === 'Car') {
-        this.recommendations.push(`${quote.customerName} should add roadside assistance.`);
-        this.recommendations.push(`${quote.customerName} may benefit from premium accident coverage.`);
-      } else if (quote.insuranceType === 'Pet') {
-        this.recommendations.push(`${quote.customerName} should add vet check-up coverage.`);
+  // Line Chart: Commission Over Time
+  public lineChartData: ChartData<'line'> = {
+    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+    datasets: [
+      {
+        data: [1000, 1500, 1200, 1800],
+        label: 'Commission ($)',
+        backgroundColor: 'rgba(0,123,255,0.3)',
+        borderColor: '#007bff',
+        pointBackgroundColor: '#007bff',
+        fill: 'origin'
       }
+    ]
+  };
+  public lineChartOptions: ChartOptions<'line'> = {
+    responsive: true,
+    plugins: {
+      legend: { display: true }
     }
-  }
+  };
+  public lineChartType: ChartType = 'line';
 
-  viewQuote(id: number) {
-    this.router.navigate(['/quotes', id]);
-  }
-
-  deleteQuote(id: number) {
-    if (confirm('Are you sure you want to delete this quote?')) {
-      this.quotes = this.quotes.filter(q => q.id !== id);
-      this.generateRecommendations(); // Refresh AI suggestions
+  // Bar Chart: Daily Quotes Submitted
+  public barChartData: ChartData<'bar'> = {
+    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+    datasets: [
+      {
+        data: [20, 25, 30, 18, 40, 22, 35],
+        label: 'Quotes Submitted',
+        backgroundColor: '#28a745'
+      }
+    ]
+  };
+  public barChartOptions: ChartOptions<'bar'> = {
+    responsive: true,
+    scales: {
+      x: {},
+      y: { beginAtZero: true }
+    },
+    plugins: {
+      legend: { display: true }
     }
+  };
+  public barChartType: ChartType = 'bar';
+
+  // Doughnut Chart: Policy Status Breakdown
+  public doughnutChartData: ChartData<'doughnut'> = {
+    labels: ['Active', 'Expired', 'Pending'],
+    datasets: [
+      {
+        data: [60, 25, 15],
+        backgroundColor: ['#007bff', '#ffc107', '#dc3545']
+      }
+    ]
+  };
+  public doughnutChartOptions: ChartOptions<'doughnut'> = {
+    responsive: true,
+    plugins: {
+      legend: { display: true }
+    }
+  };
+  public doughnutChartType: ChartType = 'doughnut';
+
+  // constructor(
+  //   @Inject(PLATFORM_ID) private platformId: object
+  // ) {}
+
+  ngOnInit(): void {
+    // Check if we're in the browser environment
+    this.isBrowser = isPlatformBrowser(this.platformId);
+
+    // If needed, fetch dynamic data here and update chart arrays.
   }
 }

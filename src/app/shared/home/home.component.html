@@ -1,61 +1,128 @@
-<div class="home-container animate__animated animate__fadeIn">
-    <!-- Hero Section -->
-    <div class="hero-section">
-      <h1 class="animate__animated animate__fadeInDown">Protect What Matters Most</h1>
-      <p class="animate__animated animate__fadeInUp">
-        Get **affordable & comprehensive** Renter's Insurance today!
+<div class="home-container">
+  <!-- Full-Screen Hero Section -->
+  <section class="hero-section" id="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content" >
+      <h1 class="hero-title">Protect Your Home, Protect Your Future</h1>
+      <p class="hero-subtitle">
+        Innovative renter's insurance that combines comprehensive coverage with cutting-edge technology,
+        ensuring peace of mind for modern living.
       </p>
-      <button class="btn btn-primary btn-lg animate__animated animate__pulse animate__infinite" 
-              routerLink="/quotes/new">
-        Get a Quote
+      <button class="btn btn-primary btn-lg" data-aos="zoom-in" routerLink="/quotes/new">
+        Get Your Free Quote
       </button>
     </div>
-  
-    <!-- Features Section -->
-    <div class="features-section">
-      <h2>Why Choose Us?</h2>
-      <div class="features-grid">
-        <div class="feature-card animate__animated animate__zoomIn">
+    <div class="hero-image" data-aos="fade-left">
+      <!-- Use a transparent, larger image with no borders/shadows -->
+      <img src="assets/images/Img.png" alt="Home Protection" />
+    </div>
+  </section>
+
+ 
+  <!-- Features Section -->
+  <section class="features-section" id="features">
+    <h2 class="section-title" data-aos="fade-up">Why Choose RentGuard?</h2>
+    <div class="features-grid">
+      <div class="feature-card" data-aos="zoom-in">
+        <div class="feature-icon">
           <i class="bi bi-shield-check"></i>
-          <h3>Comprehensive Coverage</h3>
-          <p>Protect your **belongings & liability** under one policy.</p>
         </div>
-        <div class="feature-card animate__animated animate__zoomIn animate__delay-1s">
+        <h3>Comprehensive Coverage</h3>
+        <p>All-in-one protection for your belongings, personal liability, and more.</p>
+      </div>
+      <div class="feature-card" data-aos="zoom-in" data-aos-delay="200">
+        <div class="feature-icon">
           <i class="bi bi-clock-history"></i>
-          <h3>Fast & Easy Claims</h3>
-          <p>File claims online and get **instant approvals**.</p>
         </div>
-        <div class="feature-card animate__animated animate__zoomIn animate__delay-2s">
+        <h3>Fast & Easy Claims</h3>
+        <p>Submit claims online and enjoy quick approvals with minimal hassle.</p>
+      </div>
+      <div class="feature-card" data-aos="zoom-in" data-aos-delay="400">
+        <div class="feature-icon">
           <i class="bi bi-cash-stack"></i>
-          <h3>Affordable Pricing</h3>
-          <p>Flexible plans to fit **your budget**.</p>
         </div>
+        <h3>Affordable Pricing</h3>
+        <p>Flexible plans designed to fit your budget without compromising quality.</p>
+      </div>
+      <div class="feature-card" data-aos="zoom-in" data-aos-delay="600">
+        <div class="feature-icon">
+          <i class="bi bi-life-preserver"></i>
+        </div>
+        <h3>24/7 Support</h3>
+        <p>Our customer care team is always ready to help, any time of day or night.</p>
       </div>
     </div>
-  
-    <!-- Testimonial Section -->
-    <div class="testimonial-section">
-      <h2>What Our Clients Say</h2>
-      <div class="testimonial-slider">
-        <div class="testimonial animate__animated animate__fadeIn">
-          <p>“Best insurance experience ever! The process was seamless.”</p>
-          <h4>- Alex M.</h4>
+  </section>
+
+  <!-- Carousel Section (e.g., Partners or More Testimonials) -->
+  <section class="carousel-section" id="partners">
+    <h2 class="section-title" data-aos="fade-up">Our Trusted Partners</h2>
+    <div id="partnerCarousel" class="carousel slide" data-bs-ride="carousel" data-aos="fade-up">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="assets/images/partner1.png" class="d-block w-100" alt="Partner 1">
         </div>
-        <div class="testimonial animate__animated animate__fadeIn animate__delay-1s">
-          <p>“Fast claims and great customer support. Highly recommend!”</p>
-          <h4>- Sarah K.</h4>
+        <div class="carousel-item">
+          <img src="assets/images/partner2.png" class="d-block w-100" alt="Partner 2">
+        </div>
+        <div class="carousel-item">
+          <img src="assets/images/partner3.png" class="d-block w-100" alt="Partner 3">
         </div>
       </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#partnerCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#partnerCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
     </div>
-  
-    <!-- CTA Section -->
-    <div class="cta-section">
-      <h2>Get Started Today</h2>
-      <p>Join thousands of renters who trust us for protection.</p>
-      <button class="btn btn-warning btn-lg animate__animated animate__heartBeat animate__infinite"
-              routerLink="/quotes/new">
+  </section>
+
+  <!-- Testimonial Section -->
+  <section class="testimonial-section" id="testimonials">
+    <h2 class="section-title" data-aos="fade-up">What Our Clients Say</h2>
+    <div class="testimonial-slider">
+      <div class="testimonial" data-aos="fade-right">
+        <p>“RentGuard made getting insurance a breeze. Their support is fantastic!”</p>
+        <h4>- Alex M.</h4>
+      </div>
+      <div class="testimonial" data-aos="fade-left" data-aos-delay="200">
+        <p>“Fast claims and great customer support. I highly recommend RentGuard!”</p>
+        <h4>- Sarah K.</h4>
+      </div>
+      <div class="testimonial" data-aos="fade-right" data-aos-delay="400">
+        <p>“An amazing experience – seamless, affordable, and very reliable.”</p>
+        <h4>- David R.</h4>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section" id="cta">
+    <div class="cta-overlay"></div>
+    <div class="cta-content" data-aos="zoom-in">
+      <h2>Ready to Secure Your Home?</h2>
+      <p>
+        Join thousands of satisfied renters who trust RentGuard for their insurance needs.
+      </p>
+      <button class="btn btn-warning btn-lg" data-aos="pulse" routerLink="/quotes/new">
         Get Your Quote Now
       </button>
     </div>
-  </div>
-  
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer-section">
+    <div class="footer-content" data-aos="fade-up">
+      <p>&copy; 2025 RentGuard. All Rights Reserved.</p>
+      <ul class="footer-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#cta">Contact</a></li>
+      </ul>
+    </div>
+  </footer>
+</div>

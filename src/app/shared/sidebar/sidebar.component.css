@@ -1,57 +1,124 @@
+/* Sidebar Container */
 .sidebar {
-    width: 250px;
-    height: 100vh;
-    background: linear-gradient(135deg, #007bff, #6610f2);
-    color: white;
-    position: fixed;
-    left: 0;
-    top: 60px; /* ✅ Moves sidebar below the navbar */
-    padding: 20px;
-    transition: all 0.4s ease-in-out;
-    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
-    z-index: 1000; /* ✅ Ensures sidebar is always above other elements */
-  }
-  
-  .sidebar.collapsed {
-    width: 80px;
-  }
-  
-  .menu {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .menu li {
-    margin: 15px 0;
-    transition: transform 0.3s ease-in-out;
-  }
-  
-  .menu li:hover {
-    transform: translateX(10px);
-  }
-  
-  .menu li a {
-    color: white;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .menu-toggle {
-    background: transparent;
-    border: none;
-    color: white;
-    font-size: 2rem;
-    cursor: pointer;
-    position: absolute;
-    bottom: 20px; /* ✅ Moved further down */
-    left: 50%;
-    transform: translateX(-50%);
-    transition: transform 0.3s ease-in-out;
-  }
-  
-  .menu-toggle:hover {
-    transform: translateX(-50%) scale(1.1);
-  }
-  
+  width: 250px;
+  height: 100vh;
+  background: linear-gradient(135deg, #007bff, #6610f2);
+  position: fixed;
+  top: 60px; /* or 0 if you want the sidebar to start at the very top */
+  left: 0;
+  padding: 20px;
+  box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
+  transition: width 0.4s ease-in-out, background 0.3s ease;
+  overflow: hidden;
+  z-index: 1000;
+  color: #fff;
+}
+
+/* Optional overlay effect for a subtle texture */
+.sidebar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  pointer-events: none;
+}
+
+/* Collapsed Sidebar */
+.sidebar.collapsed {
+  width: 80px;
+}
+
+/* Toggle Button */
+.menu-toggle {
+  position: absolute;
+  top: 15px;
+  right: 15px; /* push it to the top-right corner */
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.7rem;
+  cursor: pointer;
+  z-index: 1001; /* above overlay */
+  transition: transform 0.3s ease-in-out;
+  border-radius: 50%;
+  padding: 8px;
+}
+
+.menu-toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
+}
+
+.menu-toggle i {
+  transition: transform 0.4s ease;
+}
+
+.sidebar.collapsed .menu-toggle i {
+  transform: rotate(180deg);
+}
+
+/* Menu List */
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 60px 0 0 0; /* spacing from top to clear the toggle button area */
+}
+
+/* Menu Items */
+.menu li {
+  margin: 20px 0;
+  transition: transform 0.3s ease;
+}
+
+.menu li:hover {
+  transform: translateX(10px);
+}
+
+/* Menu Links */
+.menu li a {
+  color: #fff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 1rem;
+  padding: 10px;
+  border-radius: 8px;
+  transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+  white-space: nowrap;
+}
+
+/* Active link styling */
+.menu li a.active,
+.menu li a:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Hide text when collapsed */
+.sidebar.collapsed .menu li a span {
+  display: none !important;
+}
+
+/* In collapsed mode, center icons */
+.sidebar.collapsed .menu li {
+  display: flex;
+  justify-content: center;
+}
+
+.sidebar.collapsed .menu li a {
+  justify-content: center;
+  padding: 12px 0;
+}
+
+/* Menu Icon Size */
+.menu li a i {
+  font-size: 1.4rem;
+}
+
+.sidebar.collapsed {
+  width: 80px;
+}
+

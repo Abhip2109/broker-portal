@@ -52,3 +52,13 @@
 i {
   font-size: 1.5rem;
 }
+
+.main-content {
+  margin-left: 250px;
+  transition: margin-left 0.4s ease;
+}
+
+/* If the sidebar has collapsed class, shift main content left */
+.sidebar.collapsed ~ .main-content {
+  margin-left: 80px;
+}

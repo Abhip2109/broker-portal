@@ -1,0 +1,99 @@
+<div class="profile-container" [ngClass]="{'dark-mode': darkMode}">
+    <!-- Profile Section -->
+    <div class="profile-content">
+      
+      <!-- Profile Header -->
+      <div class="profile-header">
+        <div class="profile-banner"></div>
+        <div class="profile-info">
+          <img [src]="broker.profilePicture" alt="Broker Profile" class="profile-pic">
+          <h2>{{ broker.name }}</h2>
+          <p class="designation">{{ broker.company }}</p>
+          
+          <div class="broker-meta">
+            <span class="badge">{{ broker.brokerLevel }} Broker</span>
+            <span class="rating"><mat-icon>star</mat-icon> {{ broker.rating }}/5.0</span>
+          </div>
+  
+          <button mat-raised-button color="primary" (click)="toggleEdit()">
+            <mat-icon>{{ isEditing ? 'close' : 'edit' }}</mat-icon> {{ isEditing ? 'Cancel' : 'Edit Profile' }}
+          </button>
+        </div>
+      </div>
+  
+      <!-- Dark Mode Toggle -->
+      <div class="toggle-container">
+        <mat-slide-toggle class="dark-toggle" [(ngModel)]="darkMode">Dark Mode</mat-slide-toggle>
+      </div>
+  
+      <!-- Profile Completion / Performance Score -->
+      <h3 class="section-title">Profile Completion</h3>
+      <mat-progress-bar mode="determinate" [value]="profileCompletion"></mat-progress-bar>
+  
+      <!-- Profile Details -->
+      <mat-card class="profile-card">
+        <h3 class="section-title">Personal Information</h3>
+        <div class="profile-details">
+  
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput [(ngModel)]="broker.email" [disabled]="!isEditing">
+          </mat-form-field>
+  
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Phone</mat-label>
+            <input matInput [(ngModel)]="broker.phone" [disabled]="!isEditing">
+          </mat-form-field>
+  
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Address</mat-label>
+            <input matInput [(ngModel)]="broker.address" [disabled]="!isEditing">
+          </mat-form-field>
+  
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>License Number</mat-label>
+            <input matInput [(ngModel)]="broker.licenseNumber" [disabled]="!isEditing">
+          </mat-form-field>
+  
+          <mat-divider></mat-divider>
+  
+          <!-- Broker Performance Stats -->
+          <h3 class="section-title">Broker Statistics</h3>
+          <div class="broker-stats">
+            <div class="stat-box">
+              <h3>{{ broker.activePolicies }}</h3>
+              <p>Active Policies</p>
+            </div>
+            <div class="stat-box">
+              <h3>{{ broker.claimsProcessed }}</h3>
+              <p>Claims Processed</p>
+            </div>
+            <div class="stat-box">
+              <h3>{{ broker.quotesSubmitted }}</h3>
+              <p>Quotes Submitted</p>
+            </div>
+            <div class="stat-box">
+              <h3>{{ broker.policiesSold }}</h3>
+              <p>Policies Sold</p>
+            </div>
+            <div class="stat-box">
+              <h3>{{ broker.clientsHandled }}</h3>
+              <p>Clients Handled</p>
+            </div>
+            <div class="stat-box">
+              <h3>{{ broker.commissionEarned }}</h3>
+              <p>Commission Earned</p>
+            </div>
+          </div>
+  
+        </div>
+  
+        <div class="profile-actions">
+          <button mat-raised-button color="accent" *ngIf="isEditing" (click)="saveProfile()">
+            <mat-icon>save</mat-icon> Save Changes
+          </button>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+  

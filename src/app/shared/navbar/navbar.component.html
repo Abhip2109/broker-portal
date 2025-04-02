@@ -1,36 +1,100 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-gradient shadow-lg fixed-top animate__animated animate__fadeInDown">
-    <div class="container">
-      <a class="navbar-brand fw-bold logo" routerLink="/">
-        <i class="bi bi-shield-lock-fill"></i> Broker Portal
-      </a>
-  
-      <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-  
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link active nav-animated" routerLink="/quotes/new">
-              <i class="bi bi-file-earmark-plus"></i> New Quote
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link nav-animated" routerLink="/quotes">
-              <i class="bi bi-list-ul"></i> Quote List
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-danger fw-bold nav-animated" routerLink="/login">
-              <i class="bi bi-box-arrow-right"></i> Logout
-            </a>
-          </li>
-        </ul>
-      </div>
+<nav class="navbar navbar-expand-lg fixed-top custom-navbar animate__animated animate__fadeInDown">
+  <div class="container">
+    <!-- Brand with animated icon -->
+    <a class="navbar-brand fw-bold logo" routerLink="/">
+      <img src="assets/images/Insurance.png" alt="RentGuard Icon" class="brand-icon">
+      RentGuard
+    </a>
+
+    <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" 
+            data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" 
+            aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <!-- Unauthenticated Navbar -->
+      <ul *ngIf="!isLoggedIn" class="navbar-nav ms-auto align-items-center nav-links">
+        <li class="nav-item">
+          <a class="nav-link nav-animated" routerLink="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link nav-animated" routerLink="/features">Features</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link nav-animated" routerLink="/about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link nav-animated" routerLink="/contact">Contact</a>
+        </li>
+        <!-- Simplified Login/Signup Button -->
+        <li class="nav-item">
+          <a class="nav-link login-btn nav-animated" routerLink="/login">
+            <i class="bi bi-box-arrow-in-right"></i> Login/Signup
+          </a>
+        </li>
+      </ul>
+
+      <!-- Authenticated Navbar -->
+      <ul *ngIf="isLoggedIn" class="navbar-nav ms-auto align-items-center nav-links">
+        <li class="nav-item">
+          <a class="nav-link nav-animated" routerLink="/dashboard2">
+            <i class="bi bi-speedometer2"></i> Dashboard
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link nav-animated" routerLink="/quotes/new">
+            <i class="bi bi-file-earmark-plus"></i> New Quote
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link nav-animated" routerLink="/quotes">
+            <i class="bi bi-list-ul"></i> Quote List
+          </a>
+        </li>
+        <!-- Search Box -->
+        <li class="nav-item d-none d-lg-block">
+          <form class="d-flex align-items-center search-form">
+            <input class="form-control me-2 search-input" type="search" placeholder="Search quotes..." aria-label="Search">
+            <button class="btn btn-outline-light search-btn" type="submit">
+              <i class="bi bi-search"></i>
+            </button>
+          </form>
+        </li>
+        <!-- User Profile Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle nav-animated" href="#" id="navbarDropdown" 
+             role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="assets/avatar.png" alt="User" class="rounded-circle user-avatar">
+            <span class="d-none d-lg-inline ms-1">Broker</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <li>
+              <a class="dropdown-item" routerLink="/profile">
+                <i class="bi bi-person"></i> Profile
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/settings">
+                <i class="bi bi-gear"></i> Settings
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/notifications">
+                <i class="bi bi-bell"></i> Notifications
+              </a>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <a class="dropdown-item text-danger fw-bold" routerLink="/logout">
+                <i class="bi bi-box-arrow-right"></i> Logout
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
     </div>
-  </nav>
-  
-  <!-- Add spacing to prevent content from being hidden behind fixed navbar -->
-  <div class="pt-5"></div>
-  
+  </div>
+</nav>
+<!-- Spacing to prevent content from being hidden behind the fixed navbar -->
+<div class="pt-5"></div>

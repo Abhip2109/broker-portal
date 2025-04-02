@@ -1,39 +1,54 @@
-<div class="dashboard-container">
-    <app-sidebar></app-sidebar> <!-- ✅ Sidebar Navigation -->
-  
-    <div class="dashboard-content">
-      <h2 class="dashboard-title"><i class="bi bi-speedometer2"></i> Broker Dashboard</h2>
-  
-      <!-- Stats Overview -->
-      <div class="stats-container">
-        <div class="card card-stats">
-          <div class="card-icon bg-warning"><i class="bi bi-bar-chart"></i></div>
-          <p class="card-category">Total Quotes</p>
-          <h3>{{ quotes.length }}</h3>
-        </div>
-        <div class="card card-stats">
-          <div class="card-icon bg-success"><i class="bi bi-check-circle"></i></div>
-          <p class="card-category">Approved</p>
-          <h3>{{ countQuotes('Approved') }}</h3>
-        </div>
-        <div class="card card-stats">
-          <div class="card-icon bg-danger"><i class="bi bi-x-circle"></i></div>
-          <p class="card-category">Rejected</p>
-          <h3>{{ countQuotes('Rejected') }}</h3>
-        </div>
+
+<!-- Main Content Area -->
+<div class="main-content">
+  <!-- Stats Cards Row -->
+  <div class="card-row">
+    <div class="stat-card animate-card" *ngFor="let stat of stats">
+      <div class="icon-wrapper" [ngClass]="stat.color">
+        <i class="bi" [ngClass]="stat.icon"></i>
       </div>
-  
-      <!-- 🔥 Animated Charts Section -->
-      <div class="charts-container">
-        <div class="chart">
-          <h3>Quotes Submitted (Weekly)</h3>
-          <div id="weeklyChart"></div>
-        </div>
-        <div class="chart">
-          <h3>Premium Rates Analysis</h3>
-          <div id="premiumChart"></div>
-        </div>
+      <div class="stat-info">
+        <h5>{{ stat.title }}</h5>
+        <h2>{{ stat.value }}</h2>
+        <p>{{ stat.note }}</p>
       </div>
     </div>
   </div>
-  
+
+  <!-- Charts Section -->
+  <div class="charts-row">
+    <!-- Line Chart -->
+    <div class="chart-card animate-card" >
+      <h5>Commission Over Time</h5>
+      <!-- Conditionally render only if isBrowser is true -->
+      <canvas *ngIf="isBrowser"
+              baseChart
+              [data]="lineChartData"
+              [options]="lineChartOptions"
+              [type]="'line'">
+      </canvas>
+    </div>
+
+    <!-- Bar Chart -->
+    <div class="chart-card animate-card" data-aos="fade-up" data-aos-delay="200">
+      <h5>Daily Quotes Submitted</h5>
+      <canvas *ngIf="isBrowser"
+              baseChart
+              [data]="barChartData"
+              [options]="barChartOptions"
+              [type]="'bar'">
+      </canvas>
+    </div>
+
+    <!-- Doughnut Chart -->
+    <div class="chart-card animate-card" data-aos="fade-up" data-aos-delay="400">
+      <h5>Policy Status</h5>
+      <canvas *ngIf="isBrowser"
+              baseChart
+              [data]="doughnutChartData"
+              [options]="doughnutChartOptions"
+              [type]="'doughnut'">
+      </canvas>
+    </div>
+  </div>
+</div>
