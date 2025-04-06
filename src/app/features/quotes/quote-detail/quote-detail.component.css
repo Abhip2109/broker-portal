@@ -1,50 +1,73 @@
-@import 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css';
-
-.quote-details-container {
+.quote-detail-container {
+  padding: 2rem;
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: linear-gradient(135deg, #ff4e50, #f9d423);
 }
 
-.quote-details-box {
-  background: white;
-  padding: 40px;
-  border-radius: 20px;
-  width: 450px;
-  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
-  animation: fadeInUp 0.6s ease-in-out;
+.card {
+  background-color: #f9fafb;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 800px;
+  animation-duration: 0.8s;
+}
+
+.title {
   text-align: center;
+  color: #0f172a;
+  font-size: 2rem;
+  margin-bottom: 1rem;
 }
 
-.quote-info p {
+.section {
+  margin-bottom: 1.5rem;
+}
+
+.section-title {
+  color: #0369a1;
+  margin-bottom: 0.5rem;
   font-size: 1.2rem;
-  margin-bottom: 10px;
 }
 
-.ai-recommendations {
-  background: #f1f1f1;
-  padding: 15px;
-  border-radius: 10px;
-  margin-top: 20px;
+.badge {
+  padding: 0.3rem 0.7rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  color: white;
 }
 
-.ai-recommendations h4 {
-  color: #ff4e50;
-}
+.badge.Draft { background-color: #9ca3af; }
+.badge.Approved { background-color: #10b981; }
+.badge.Submitted { background-color: #3b82f6; }
+.badge.Rejected { background-color: #ef4444; }
 
-.ai-recommendations ul {
+ul {
   list-style: none;
   padding-left: 0;
 }
 
-.ai-recommendations li {
-  font-size: 1.1rem;
-  margin-bottom: 5px;
+ul li {
+  margin-bottom: 0.4rem;
+  color: #374151;
 }
 
-.badge {
-  font-size: 1rem;
-  padding: 5px 10px;
+.actions {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.btn {
+  background-color: #1e40af;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: #1d4ed8;
 }

@@ -1,26 +1,21 @@
 <div class="leaderboard-container animate__animated animate__fadeIn">
-    <h2 class="text-center"><i class="bi bi-trophy"></i> Top Brokers</h2>
-  
-    <div class="leaderboard">
-      <div class="leaderboard-header">
-        <span>#</span>
-        <span>Broker</span>
-        <span>Policies Closed</span>
-        <span>Commission ($)</span>
-        <span>Badge</span>
+  <h2 class="title">🏆 Broker Leaderboard</h2>
+
+  <div class="leaderboard">
+    <div
+      *ngFor="let broker of brokers; let i = index"
+      class="card animate__animated animate__fadeInUp"
+      [style.animationDelay]="(i * 0.15) + 's'"
+    >
+      <div class="rank">#{{ i + 1 }}</div>
+      <img [src]="broker.avatar" alt="Avatar" class="avatar" />
+      <div class="info">
+        <h3 class="name">{{ broker.name }}</h3>
+        <p class="meta">Quotes: {{ broker.quotes }} | Policies: {{ broker.policies }}</p>
       </div>
-  
-      <div class="leaderboard-row animate__animated animate__zoomIn" 
-           *ngFor="let broker of brokers; let i = index" 
-           [ngClass]="{'top-rank': i < 3}">
-        <span class="rank">{{ i + 1 }}</span>
-        <span class="broker-name">{{ broker.name }}</span>
-        <span>{{ broker.policies }}</span>
-        <span>${{ broker.commission }}</span>
-        <span>
-          <i [ngClass]="getBadgeClass(i)"></i>
-        </span>
+      <div class="score">
+        <span>{{ broker.score }}</span>
       </div>
     </div>
   </div>
-  
+</div>

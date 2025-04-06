@@ -1,0 +1,108 @@
+.notifications-wrapper {
+    padding: 1rem;
+    width: 100%;
+    max-width: 360px;
+    background: #f8fafc;
+    border-left: 3px solid #3b82f6;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #dbeafe;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #1e3a8a;
+  }
+  
+  .clear-btn {
+    background: transparent;
+    border: none;
+    color: #ef4444;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .clear-btn:hover {
+    color: #dc2626;
+  }
+  
+  .notification-card {
+    display: flex;
+    gap: 0.75rem;
+    background: white;
+    border-left: 5px solid transparent;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    transition: all 0.3s ease;
+  }
+  
+  .notification-card .icon {
+    font-size: 1.4rem;
+    padding-top: 0.2rem;
+  }
+  
+  .notification-card .content h4 {
+    margin: 0;
+    font-size: 1rem;
+    color: #1e293b;
+  }
+  
+  .notification-card .content p {
+    margin: 0.25rem 0;
+    font-size: 0.9rem;
+    color: #475569;
+  }
+  
+  .notification-card .content small {
+    font-size: 0.75rem;
+    color: #94a3b8;
+  }
+  
+  /* Color types */
+  .notification-card.info {
+    border-left-color: #3b82f6;
+  }
+  
+  .notification-card.success {
+    border-left-color: #10b981;
+  }
+  
+  .notification-card.warning {
+    border-left-color: #f59e0b;
+  }
+  
+  .notification-card.error {
+    border-left-color: #ef4444;
+  }
+  
+  .empty {
+    text-align: center;
+    color: #64748b;
+    font-style: italic;
+    margin-top: 2rem;
+  }
+  
+  .notifications-wrapper {
+    padding: 1rem 2rem;
+    margin-left: 220px; /* Adjust based on sidebar width */
+    max-width: 600px;
+    background: #f8fafc;
+    border-radius: 0.75rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    animation: fadeIn 0.6s ease-in-out;
+  }
+  
+
+  

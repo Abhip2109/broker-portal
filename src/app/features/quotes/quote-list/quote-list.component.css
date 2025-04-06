@@ -1,24 +1,105 @@
-@import 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css';
-
-.container {
-  max-width: 900px;
+.quote-list-container {
+  padding: 20px;
+  background-color: #f0f9ff;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
-.table {
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.table th {
+.heading {
+  color: #0369a1;
+  margin-bottom: 20px;
   text-align: center;
 }
 
-.table td {
-  vertical-align: middle;
-  text-align: center;
+.filters {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
 }
 
-.badge {
-  font-size: 1rem;
-  padding: 5px 10px;
+.filters input, .filters select {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #93c5fd;
+  outline: none;
+  transition: 0.3s;
+}
+
+.filters input:focus, .filters select:focus {
+  border-color: #0369a1;
+}
+
+.quote-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.quote-table th, .quote-table td {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #bfdbfe;
+}
+
+.status-tag {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: 500;
+  color: white;
+}
+
+.status-tag.Draft { background: #9ca3af; }
+.status-tag.Submitted { background: #3b82f6; }
+.status-tag.Bound { background: #10b981; }
+.status-tag.Rejected { background: #ef4444; }
+
+.actions button {
+  margin: 2px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.actions .delete-btn {
+  background: #ef4444;
+  color: white;
+}
+
+.actions button:disabled {
+  background: #d1d5db;
+  cursor: not-allowed;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+  gap: 10px;
+}
+
+.pagination button {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  background: #0369a1;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.pagination button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  align-self: center;
+  color: #0369a1;
+}
+.no-results {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #555;
+  opacity: 0.85;
 }

@@ -10,12 +10,14 @@ import { Dashboard2Component } from './features/dashboard2/dashboard2.component'
 import { BrokerProfileComponent } from './features/broker-profile/broker-profile.component';
 import { LeaderboardComponent } from './features/leaderboard/leaderboard.component';
 import { NotificationsComponent } from './features/notifications/notifications.component';
+import { UserProfileComponent } from './features/user-profile/user-profile.component';
 
 export const routes: Routes = [
   // Public Routes
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'quotes/new', component: QuoteFormComponent },
+  { path: 'user-profile', component:UserProfileComponent},
   // Broker-Protected Routes inside the Layout
   {
     path: '',

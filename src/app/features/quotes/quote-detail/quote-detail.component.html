@@ -1,28 +1,54 @@
-<div class="quote-details-container animate__animated animate__fadeIn">
-    <div class="quote-details-box shadow-lg">
-      <h2 class="text-center mb-4"><i class="bi bi-receipt"></i> Quote Details</h2>
-  
-      <div class="quote-info">
-        <p><strong>Customer:</strong> {{ quote.customerName }}</p>
-        <p><strong>Insurance Type:</strong> {{ quote.insuranceType }}</p>
-        <p><strong>Premium:</strong> ${{ quote.premium }}</p>
-        <p><strong>Status:</strong> <span class="badge" [class.bg-success]="quote.status === 'Approved'"
-            [class.bg-warning]="quote.status === 'Pending'" [class.bg-danger]="quote.status === 'Rejected'">
-            {{ quote.status }}
-          </span></p>
-      </div>
-  
-      <!-- AI-Driven Recommendations -->
-      <div *ngIf="recommendations.length > 0" class="ai-recommendations">
-        <h4><i class="bi bi-lightbulb"></i> Smart Recommendations</h4>
-        <ul>
-          <li *ngFor="let rec of recommendations">
-            <i class="bi bi-check-circle text-success"></i> {{ rec }}
-          </li>
-        </ul>
-      </div>
-  
-      <button class="btn btn-primary mt-3 w-100" (click)="goBack()">Back to Quotes</button>
+<!-- quote-detail.component.html -->
+<div class="quote-detail-container animate__animated animate__fadeIn">
+  <div class="card">
+    <h2 class="title">Quote Details - #{{ quote.id }}</h2>
+
+    <div class="section">
+      <h3 class="section-title">Customer Info</h3>
+      <p><strong>Name:</strong> {{ quote.customerName }}</p>
+      <p><strong>Email:</strong> {{ quote.email }}</p>
+      <p><strong>Status:</strong> <span class="badge" [ngClass]="quote.status">{{ quote.status }}</span></p>
+      <p><strong>Created Date:</strong> {{ quote.createdDate | date:'mediumDate' }}</p>
+    </div>
+
+    <div class="section">
+      <h3 class="section-title">Property Details</h3>
+      <p><strong>Type:</strong> {{ quote.property.type }}</p>
+      <p><strong>Address:</strong> {{ quote.property.address }}</p>
+      <p><strong>Size:</strong> {{ quote.property.sqFootage }} sq. ft.</p>
+      <p><strong>Year Built:</strong> {{ quote.property.yearBuilt }}</p>
+    </div>
+
+    <div class="section">
+      <h3 class="section-title">Coverage Info</h3>
+      <p><strong>Personal Property:</strong> ${{ quote.coverage.personalProperty }}</p>
+      <p><strong>Liability:</strong> ${{ quote.coverage.liability }}</p>
+      <p><strong>Deductible:</strong> ${{ quote.coverage.deductible }}</p>
+      <p><strong>Add-ons:</strong> {{ quote.coverage.addOns.join(', ') }}</p>
+    </div>
+
+    <div class="section">
+      <h3 class="section-title">Safety Features</h3>
+      <ul>
+        <li *ngFor="let feature of quote.safetyFeatures">✔️ {{ feature }}</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h3 class="section-title">Other Info</h3>
+      <p><strong>Credit Score:</strong> {{ quote.creditScore }}</p>
+      <p><strong>Previous Claims:</strong> {{ quote.previousClaims }}</p>
+    </div>
+
+    <div class="section">
+      <h3 class="section-title">Smart Recommendations</h3>
+      <ul>
+        <li *ngFor="let tip of recommendations">✨ {{ tip }}</li>
+      </ul>
+    </div>
+
+    <div class="actions">
+      <button class="btn" (click)="goBack()">⬅️ Back to Quotes</button>
     </div>
   </div>
-  
+</div>

@@ -1,99 +1,54 @@
-<div class="profile-container" [ngClass]="{'dark-mode': darkMode}">
-    <!-- Profile Section -->
-    <div class="profile-content">
-      
-      <!-- Profile Header -->
-      <div class="profile-header">
-        <div class="profile-banner"></div>
-        <div class="profile-info">
-          <img [src]="broker.profilePicture" alt="Broker Profile" class="profile-pic">
-          <h2>{{ broker.name }}</h2>
-          <p class="designation">{{ broker.company }}</p>
-          
-          <div class="broker-meta">
-            <span class="badge">{{ broker.brokerLevel }} Broker</span>
-            <span class="rating"><mat-icon>star</mat-icon> {{ broker.rating }}/5.0</span>
-          </div>
-  
-          <button mat-raised-button color="primary" (click)="toggleEdit()">
-            <mat-icon>{{ isEditing ? 'close' : 'edit' }}</mat-icon> {{ isEditing ? 'Cancel' : 'Edit Profile' }}
-          </button>
-        </div>
+<div class="profile-container animate__animated animate__fadeIn">
+  <div class="profile-card">
+    <img [src]="broker.avatarUrl" alt="Broker Avatar" class="avatar" />
+
+    <h2 class="name">{{ broker.name }}</h2>
+    <p class="bio animate__animated animate__fadeInUp">{{ broker.bio }}</p>
+
+    <div class="info animate__animated animate__fadeInUp animate__delay-1s">
+      <p><strong>Email:</strong> {{ broker.email }}</p>
+      <p><strong>Phone:</strong> {{ broker.phone }}</p>
+      <p><strong>License #:</strong> {{ broker.licenseNumber }}</p>
+      <p><strong>Joined:</strong> {{ broker.joiningDate | date: 'mediumDate' }}</p>
+    </div>
+
+    <div class="stats animate__animated animate__fadeInUp animate__delay-2s">
+      <div class="stat-box">
+        <h3>{{ broker.totalQuotes }}</h3>
+        <p>Total Quotes</p>
       </div>
-  
-      <!-- Dark Mode Toggle -->
-      <div class="toggle-container">
-        <mat-slide-toggle class="dark-toggle" [(ngModel)]="darkMode">Dark Mode</mat-slide-toggle>
+      <div class="stat-box">
+        <h3>{{ broker.approvedPolicies }}</h3>
+        <p>Approved</p>
       </div>
-  
-      <!-- Profile Completion / Performance Score -->
-      <h3 class="section-title">Profile Completion</h3>
-      <mat-progress-bar mode="determinate" [value]="profileCompletion"></mat-progress-bar>
-  
-      <!-- Profile Details -->
-      <mat-card class="profile-card">
-        <h3 class="section-title">Personal Information</h3>
-        <div class="profile-details">
-  
-          <mat-form-field class="full-width" appearance="outline">
-            <mat-label>Email</mat-label>
-            <input matInput [(ngModel)]="broker.email" [disabled]="!isEditing">
-          </mat-form-field>
-  
-          <mat-form-field class="full-width" appearance="outline">
-            <mat-label>Phone</mat-label>
-            <input matInput [(ngModel)]="broker.phone" [disabled]="!isEditing">
-          </mat-form-field>
-  
-          <mat-form-field class="full-width" appearance="outline">
-            <mat-label>Address</mat-label>
-            <input matInput [(ngModel)]="broker.address" [disabled]="!isEditing">
-          </mat-form-field>
-  
-          <mat-form-field class="full-width" appearance="outline">
-            <mat-label>License Number</mat-label>
-            <input matInput [(ngModel)]="broker.licenseNumber" [disabled]="!isEditing">
-          </mat-form-field>
-  
-          <mat-divider></mat-divider>
-  
-          <!-- Broker Performance Stats -->
-          <h3 class="section-title">Broker Statistics</h3>
-          <div class="broker-stats">
-            <div class="stat-box">
-              <h3>{{ broker.activePolicies }}</h3>
-              <p>Active Policies</p>
-            </div>
-            <div class="stat-box">
-              <h3>{{ broker.claimsProcessed }}</h3>
-              <p>Claims Processed</p>
-            </div>
-            <div class="stat-box">
-              <h3>{{ broker.quotesSubmitted }}</h3>
-              <p>Quotes Submitted</p>
-            </div>
-            <div class="stat-box">
-              <h3>{{ broker.policiesSold }}</h3>
-              <p>Policies Sold</p>
-            </div>
-            <div class="stat-box">
-              <h3>{{ broker.clientsHandled }}</h3>
-              <p>Clients Handled</p>
-            </div>
-            <div class="stat-box">
-              <h3>{{ broker.commissionEarned }}</h3>
-              <p>Commission Earned</p>
-            </div>
-          </div>
-  
-        </div>
-  
-        <div class="profile-actions">
-          <button mat-raised-button color="accent" *ngIf="isEditing" (click)="saveProfile()">
-            <mat-icon>save</mat-icon> Save Changes
-          </button>
-        </div>
-      </mat-card>
+      <div class="stat-box">
+        <h3>{{ broker.pendingQuotes }}</h3>
+        <p>Pending</p>
+      </div>
+    </div>
+
+    <div class="skills animate__animated animate__fadeInUp animate__delay-3s">
+      <h4>Skills</h4>
+      <ul>
+        <li *ngFor="let skill of broker.skills">✔️ {{ skill }}</li>
+      </ul>
+    </div>
+
+    <div class="certs animate__animated animate__fadeInUp animate__delay-4s">
+      <h4>Certifications</h4>
+      <ul>
+        <li *ngFor="let cert of broker.certifications">📜 {{ cert }}</li>
+      </ul>
+    </div>
+
+    <button class="edit-btn" (click)="toggleEdit()">{{ editMode ? 'Cancel' : 'Edit Profile' }}</button>
+
+    <div *ngIf="editMode" class="edit-form animate__animated animate__fadeInUp">
+      <label>Name: <input [(ngModel)]="broker.name" /></label>
+      <label>Email: <input [(ngModel)]="broker.email" /></label>
+      <label>Phone: <input [(ngModel)]="broker.phone" /></label>
+      <label>Bio: <textarea [(ngModel)]="broker.bio"></textarea></label>
+      <button class="save-btn" (click)="saveProfile()">Save</button>
     </div>
   </div>
-  
+</div>

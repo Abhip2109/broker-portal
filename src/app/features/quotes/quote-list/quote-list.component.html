@@ -1,52 +1,56 @@
-<div class="container animate__animated animate__fadeIn">
-    <h2 class="text-center mb-4"><i class="bi bi-list-ul"></i> Submitted Quotes</h2>
-  
-    <!-- Filter & Sort -->
-    <div class="row mb-3">
-      <div class="col-md-6">
-        <input type="text" class="form-control" [(ngModel)]="searchQuery" placeholder="Search by Customer Name">
-      </div>
-      <div class="col-md-6 text-end">
-        <select class="form-select w-auto d-inline" [(ngModel)]="sortOption">
-          <option value="date">Sort by Date</option>
-          <option value="premium">Sort by Premium</option>
-        </select>
-      </div>
-    </div>
-  
-    <!-- Quotes Table -->
-    <div class="table-responsive">
-      <table class="table table-hover shadow-sm">
-        <thead class="table-primary">
-          <tr>
-            <th>Customer</th>
-            <th>Insurance Type</th>
-            <th>Premium ($)</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let quote of filteredQuotes()">
-            <td>{{ quote.customerName }}</td>
-            <td>{{ quote.insuranceType }}</td>
-            <td>{{ quote.premium }}</td>
-            <td>
-              <span class="badge bg-success" *ngIf="quote.status === 'Approved'">Approved</span>
-              <span class="badge bg-warning" *ngIf="quote.status === 'Pending'">Pending</span>
-              <span class="badge bg-danger" *ngIf="quote.status === 'Rejected'">Rejected</span>
-            </td>
-            <td>
-              <button class="btn btn-info btn-sm me-2" (click)="viewQuote(quote.id)">
-                <i class="bi bi-eye"></i> View
-              </button>
-              <button class="btn btn-danger btn-sm" (click)="deleteQuote(quote.id)">
-                <i class="bi bi-trash"></i> Delete
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+<div class="quote-list-container animate__animated animate__fadeIn">
+  <h2 class="heading">Insurance Quotes</h2>
+
+  <!-- Filters -->
+  <div class="filters">
+    <input type="text" [(ngModel)]="searchTerm" (input)="filterQuotes()" placeholder="Search by Customer Name" />
+    <select [(ngModel)]="selectedStatus" (change)="filterQuotes()">
+      <option value="">All Statuses</option>
+      <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+    </select>
   </div>
-  
+
+  <!-- Quote Table -->
+  <table class="quote-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Customer Name</th>
+        <th>Email</th>
+        <th>Premium ($)</th>
+        <th>Status</th>
+        <th>Created Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let quote of paginateQuotes()" class="animate__animated animate__fadeInUp">
+        <td>{{ quote.id }}</td>
+        <td>{{ quote.customerName }}</td>
+        <td>{{ quote.email }}</td>
+        <td>{{ quote.premium }}</td>
+        <td><span class="status-tag" [ngClass]="quote.status">{{ quote.status }}</span></td>
+        <td>{{ quote.createdDate | date }}</td>
+        <td class="actions">
+          <button (click)="viewQuote(quote)">View</button>
+          <button (click)="editQuote(quote)" [disabled]="quote.status !== 'Draft'">Edit</button>
+          <button (click)="submitForBind(quote)" [disabled]="quote.status !== 'Draft'">Submit for Bind</button>
+          <button class="delete-btn" (click)="softDelete(quote)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+ 
+  <div *ngIf="filteredQuotes.length === 0" class="no-results animate__animated animate__fadeIn">
+    <img src="assets/images/noData.png" alt="No Results" style="max-width: 180px; margin-bottom: 1rem;">
+    <h4>No quotes found.</h4>
+    <p>Try adjusting your search or filter criteria.</p>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination">
+    <button [disabled]="currentPage === 1" (click)="changePage(currentPage - 1)">Prev</button>
+    <span>Page {{currentPage}} / {{totalPages()}}</span>
+    <button [disabled]="currentPage >= filteredQuotes.length / pageSize" (click)="changePage(currentPage + 1)">Next</button>
+  </div>
+</div>

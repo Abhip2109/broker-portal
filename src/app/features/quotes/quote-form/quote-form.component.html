@@ -1,69 +1,381 @@
 <div class="quote-container animate__animated animate__fadeIn">
-  <div class="quote-box shadow-lg">
-    <h2 class="text-center mb-4"><i class="bi bi-shield-check"></i> Let's Get You Covered</h2>
-
-    <!-- Step 1: Personal Details -->
-    <div class="quote-step" *ngIf="step === 1">
-      <p class="question">Enter Your Personal Details:</p>
-      <input type="text" class="form-control mb-2" placeholder="Full Name" [(ngModel)]="quote.fullName">
-      <input type="email" class="form-control mb-2" placeholder="Email Address" [(ngModel)]="quote.email">
-      <input type="text" class="form-control mb-2" placeholder="Phone Number" [(ngModel)]="quote.phone">
-      <input type="text" class="form-control mb-2" placeholder="Address" [(ngModel)]="quote.address">
-      <button class="btn btn-primary mt-3 w-100 next-btn" (click)="nextStep()">Next</button>
+  <!-- PROGRESS BAR (Horizontal) -->
+  <div class="progress-bar-container">
+    <div class="progress-steps">
+      <div
+        *ngFor="let s of steps; let i = index"
+        class="progress-step"
+        [class.active]="step === i + 1"
+      >
+        <div class="step-index">{{ i + 1 }}</div>
+        <div class="step-label">{{ s.label }}</div>
+      </div>
     </div>
+    <div class="progress-line">
+      <div
+        class="progress-fill"
+        [style.width.%]="((step - 1) / (totalSteps - 1)) * 100"
+      ></div>
+    </div>
+  </div>
+
+  <!-- MAIN FORM BOX -->
+  <div class="quote-box shadow-xl rounded-3xl p-6 bg-gradient-to-br from-blue-50 to-white animate__animated animate__fadeInUp">
+    <h2 class="text-center text-3xl font-bold mb-6 text-blue-600">
+      Renters' Insurance Quote
+    </h2>
+
+    <!-- Step 1: Personal Info -->
+    <form *ngIf="step === 1" (ngSubmit)="nextStep()" #personalForm="ngForm">
+      <div class="form-group">
+        <label>Full Name</label>
+        <input
+          type="text"
+          class="form-control"
+          required
+          [(ngModel)]="quote.fullName"
+          name="fullName"
+          #fullName="ngModel"
+        />
+        <div *ngIf="fullName.invalid && fullName.touched" class="error">
+          Full Name is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input
+          type="email"
+          class="form-control"
+          required
+          [(ngModel)]="quote.email"
+          name="email"
+          #email="ngModel"
+        />
+        <div *ngIf="email.invalid && email.touched" class="error">
+          Valid Email is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Phone</label>
+        <input
+          type="text"
+          class="form-control"
+          required
+          [(ngModel)]="quote.phone"
+          name="phone"
+          #phone="ngModel"
+        />
+        <div *ngIf="phone.invalid && phone.touched" class="error">
+          Phone is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Date of Birth</label>
+        <input
+          type="date"
+          class="form-control"
+          [(ngModel)]="quote.dob"
+          name="dob"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Marital Status</label>
+        <select class="form-control" [(ngModel)]="quote.maritalStatus" name="maritalStatus">
+          <option value="" disabled selected>Select Status</option>
+          <option value="single">Single</option>
+          <option value="married">Married</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Occupation (Optional)</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="quote.occupation"
+          name="occupation"
+        />
+      </div>
+
+      <button class="btn btn-primary w-100 mt-4" type="submit">Next</button>
+    </form>
 
     <!-- Step 2: Property Details -->
-    <div class="quote-step" *ngIf="step === 2">
-      <p class="question">Property Details:</p>
-      <select class="form-control mb-2" [(ngModel)]="quote.propertyType">
-        <option value="" disabled selected>Select Property Type</option>
-        <option value="apartment">Apartment</option>
-        <option value="house">House</option>
-        <option value="condo">Condo</option>
-      </select>
-      <input type="number" class="form-control mb-2" placeholder="Square Footage" [(ngModel)]="quote.sqFootage">
-      <input type="number" class="form-control mb-2" placeholder="Year Built" [(ngModel)]="quote.yearBuilt">
-      <input type="number" class="form-control mb-2" placeholder="Number of Bedrooms" [(ngModel)]="quote.bedrooms">
-      <button class="btn btn-secondary w-100" (click)="prevStep()">Back</button>
-      <button class="btn btn-primary mt-3 w-100 next-btn" (click)="nextStep()">Next</button>
+    <div *ngIf="step === 2">
+      <div class="form-group">
+        <label>Address</label>
+        <input type="text" class="form-control" [(ngModel)]="quote.address" name="address" required />
+      </div>
+
+      <div class="form-group">
+        <label>ZIP Code</label>
+        <input type="text" class="form-control" [(ngModel)]="quote.zipCode" name="zipCode" required />
+      </div>
+
+      <div class="form-group">
+        <label>Property Type</label>
+        <select class="form-control" [(ngModel)]="quote.propertyType" name="propertyType" required>
+          <option value="" disabled selected>Select Property Type</option>
+          <option value="apartment">Apartment</option>
+          <option value="house">House</option>
+          <option value="condo">Condo</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Square Footage</label>
+        <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="quote.sqFootage"
+          name="sqFootage"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Building Age (in years)</label>
+        <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="quote.buildingAge"
+          name="buildingAge"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Number of Bedrooms</label>
+        <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="quote.bedrooms"
+          name="bedrooms"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Floor (if applicable)</label>
+        <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="quote.floor"
+          name="floor"
+          min="1"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Construction Type</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="quote.constructionType"
+          name="constructionType"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Distance to Fire Hydrant</label>
+        <select class="form-control" [(ngModel)]="quote.fireHydrantDistance" name="fireHydrantDistance">
+          <option value="" disabled selected>Select Distance</option>
+          <option value="<100ft">Less than 100 ft</option>
+          <option value="100-500ft">100 - 500 ft</option>
+          <option value=">500ft">More than 500 ft</option>
+        </select>
+      </div>
+
+      <div class="btn-group mt-4">
+        <button class="btn btn-secondary" (click)="prevStep()">Back</button>
+        <button class="btn btn-primary ml-2" (click)="nextStep()">Next</button>
+      </div>
     </div>
 
-    <!-- Step 3: Insurance Selection -->
-    <div class="quote-step" *ngIf="step === 3">
-      <p class="question">Which insurances would you like?</p>
-      <button class="btn insurance-btn active">Renter's Insurance (Mandatory)</button>
-      <button class="btn insurance-btn" [class.active]="quote.carInsurance" (click)="toggleInsurance('carInsurance')">
-        <i class="bi bi-car-front"></i> Car Insurance (+$200)
-      </button>
-      <button class="btn insurance-btn" [class.active]="quote.petInsurance" (click)="toggleInsurance('petInsurance')">
-        <i class="bi bi-heart"></i> Pet Insurance (+$100)
-      </button>
-      <button class="btn btn-secondary w-100" (click)="prevStep()">Back</button>
-      <button class="btn btn-primary mt-3 w-100 next-btn" (click)="nextStep()">Next</button>
+    <!-- Step 3: Coverage Selection -->
+    <div *ngIf="step === 3">
+      <div class="form-group">
+        <label>Personal Property Coverage</label>
+        <select
+          class="form-control"
+          [(ngModel)]="quote.personalPropertyCoverage"
+          name="personalPropertyCoverage"
+        >
+          <option [value]="20000">$20,000</option>
+          <option [value]="50000">$50,000</option>
+          <option [value]="100000">$100,000</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Liability Coverage</label>
+        <select class="form-control" [(ngModel)]="quote.liabilityCoverage" name="liabilityCoverage">
+          <option [value]="100000">$100,000</option>
+          <option [value]="300000">$300,000</option>
+          <option [value]="500000">$500,000</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Deductible</label>
+        <select class="form-control" [(ngModel)]="quote.deductible" name="deductible">
+          <option [value]="250">$250</option>
+          <option [value]="500">$500</option>
+          <option [value]="1000">$1,000</option>
+        </select>
+      </div>
+
+      <p class="mt-3 font-semibold">Additional Coverages:</p>
+      <div class="coverage-options">
+        <label>
+          <input type="checkbox" [(ngModel)]="quote.additionalLivingExpenseCoverage" name="additionalLivingExpenseCoverage" />
+          Additional Living Expense Coverage
+        </label>
+        <label>
+          <input type="checkbox" [(ngModel)]="quote.earthquakeCoverage" name="earthquakeCoverage" />
+          Earthquake Coverage
+        </label>
+        <label>
+          <input type="checkbox" [(ngModel)]="quote.floodCoverage" name="floodCoverage" />
+          Flood Coverage
+        </label>
+        <label>
+          <input type="checkbox" [(ngModel)]="quote.identityTheftProtection" name="identityTheftProtection" />
+          Identity Theft Protection
+        </label>
+      </div>
+
+      <div class="btn-group mt-4">
+        <button class="btn btn-secondary" (click)="prevStep()">Back</button>
+        <button class="btn btn-primary ml-2" (click)="nextStep()">Next</button>
+      </div>
     </div>
 
-    <!-- Step 4: Safety Features -->
-    <div class="quote-step" *ngIf="step === 4">
-      <p class="question">Any safety features?</p>
-      <button class="btn discount-btn" [class.active]="quote.fireProtection" (click)="toggleDiscount('fireProtection')">
-        <i class="bi bi-fire"></i> Fire Protection (-10%)
-      </button>
-      <button class="btn discount-btn" [class.active]="quote.securityCameras" (click)="toggleDiscount('securityCameras')">
-        <i class="bi bi-camera-video"></i> Security Cameras (-5%)
-      </button>
-      <button class="btn discount-btn" [class.active]="quote.gatedCommunity" (click)="toggleDiscount('gatedCommunity')">
-        <i class="bi bi-house-door"></i> Gated Community (-7%)
-      </button>
-      <button class="btn btn-secondary w-100" (click)="prevStep()">Back</button>
-      <button class="btn btn-primary mt-3 w-100 next-btn" (click)="nextStep()">Next</button>
+    <!-- Step 4: Safety & Discounts -->
+    <div *ngIf="step === 4">
+      <p class="font-semibold">Select Safety Features & Discounts:</p>
+      <div class="safety-grid">
+        <label>
+          <input type="checkbox" [(ngModel)]="quote.fireProtection" name="fireProtection" />
+          Fire Protection (-10%)
+        </label>
+        <label>
+          <input type="checkbox" [(ngModel)]="quote.securityCameras" name="securityCameras" />
+          Security Cameras (-5%)
+        </label>
+        <label>
+          <input type="checkbox" [(ngModel)]="quote.gatedCommunity" name="gatedCommunity" />
+          Gated Community (-7%)
+        </label>
+        <label>
+          <input type="checkbox" [(ngModel)]="quote.smokeDetectors" name="smokeDetectors" />
+          Smoke Detectors (-3%)
+        </label>
+        <label>
+          <input type="checkbox" [(ngModel)]="quote.sprinklerSystem" name="sprinklerSystem" />
+          Sprinkler System (-4%)
+        </label>
+        <label>
+          <input type="checkbox" [(ngModel)]="quote.burglarAlarm" name="burglarAlarm" />
+          Burglar Alarm (-5%)
+        </label>
+        <label>
+          <input type="checkbox" [(ngModel)]="quote.deadboltLocks" name="deadboltLocks" />
+          Deadbolt Locks (-2%)
+        </label>
+        <label>
+          <input type="checkbox" [(ngModel)]="quote.multiPolicyDiscount" name="multiPolicyDiscount" />
+          Multi-Policy Discount (-5%)
+        </label>
+        <label>
+          <input type="checkbox" [(ngModel)]="quote.nonSmoker" name="nonSmoker" />
+          Non-Smoker (-5%)
+        </label>
+        <label>
+          <input type="checkbox" [(ngModel)]="quote.autoPayEnrollment" name="autoPayEnrollment" />
+          Auto-Pay Enrollment (-2%)
+        </label>
+      </div>
+
+      <div class="btn-group mt-4">
+        <button class="btn btn-secondary" (click)="prevStep()">Back</button>
+        <button class="btn btn-primary ml-2" (click)="nextStep()">Next</button>
+      </div>
     </div>
 
-    <!-- Step 5: Final Quote -->
-    <div class="quote-step" *ngIf="step === 5">
-      <p class="question">Your Updated Premium:</p>
-      <h3 class="premium">${{ finalPremium }}</h3>
-      <button class="btn btn-secondary w-100" (click)="prevStep()">Back</button>
-      <button class="btn btn-success mt-3 w-100 btn-animated" (click)="submitQuote()">Confirm & Get Quote</button>
+    <!-- Step 5: Insurance History & Credit -->
+    <div *ngIf="step === 5">
+      <div class="form-group">
+        <label>Previous Claims</label>
+        <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="quote.previousClaims"
+          name="previousClaims"
+          min="0"
+        />
+      </div>
+      <div class="form-group">
+        <label>Years with Previous Insurer</label>
+        <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="quote.yearsWithPreviousInsurer"
+          name="yearsWithPreviousInsurer"
+          min="0"
+        />
+      </div>
+      <div class="form-group">
+        <label>Has Continuous Coverage</label>
+        <select
+          class="form-control"
+          [(ngModel)]="quote.hasContinuousCoverage"
+          name="hasContinuousCoverage"
+        >
+          <option [ngValue]="false">No</option>
+          <option [ngValue]="true">Yes</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Credit Score</label>
+        <select class="form-control" [(ngModel)]="quote.creditScoreBracket" name="creditScoreBracket">
+          <option value="" disabled selected>Select Credit Score</option>
+          <option value="excellent">Excellent</option>
+          <option value="good">Good</option>
+          <option value="fair">Fair</option>
+          <option value="poor">Poor</option>
+        </select>
+      </div>
+
+      <div class="btn-group mt-4">
+        <button class="btn btn-secondary" (click)="prevStep()">Back</button>
+        <button class="btn btn-primary ml-2" (click)="nextStep()">Next</button>
+      </div>
+    </div>
+
+    <!-- Step 6: Review & Submit -->
+    <div *ngIf="step === 6">
+      <p class="text-lg font-semibold mb-3">Estimated Premium:</p>
+      <h3 class="text-3xl text-blue-600 font-bold my-3">${{ finalPremium }}</h3>
+
+      <!-- Simple summary (optional) -->
+      <div class="summary-box">
+        <p class="mb-1"><strong>Name:</strong> {{ quote.fullName }}</p>
+        <p class="mb-1"><strong>Property Type:</strong> {{ quote.propertyType }}</p>
+        <p class="mb-1"><strong>Personal Property Coverage:</strong> {{ quote.personalPropertyCoverage | currency }}</p>
+        <p class="mb-1"><strong>Liability Coverage:</strong> {{ quote.liabilityCoverage | currency }}</p>
+        <p class="mb-1"><strong>Deductible:</strong> ${{ quote.deductible }}</p>
+        <!-- Add more fields as needed -->
+      </div>
+
+      <div class="btn-group mt-4">
+        <button class="btn btn-secondary" (click)="prevStep()">Back</button>
+        <button class="btn btn-success ml-2" (click)="submitQuote()">Confirm & Submit</button>
+      </div>
     </div>
   </div>
 </div>

@@ -1,1 +1,27 @@
-<p>notifications works!</p>
+<div class="notifications-wrapper animate__animated animate__fadeInRight">
+    <div class="header">
+      <h3>Notifications</h3>
+      <button class="clear-btn" (click)="clearAll()">Clear All</button>
+    </div>
+  
+    <div *ngIf="notifications.length === 0" class="empty">
+      <p>No new notifications 🎉</p>
+    </div>
+  
+    <div *ngFor="let note of notifications" class="notification-card animate__animated animate__fadeInUp" [ngClass]="note.type">
+      <div class="icon">
+        <i class="bi" [ngClass]="{
+          'bi-info-circle': note.type === 'info',
+          'bi-check-circle': note.type === 'success',
+          'bi-exclamation-triangle': note.type === 'warning',
+          'bi-x-circle': note.type === 'error'
+        }"></i>
+      </div>
+      <div class="content">
+        <h4>{{ note.title }}</h4>
+        <p>{{ note.message }}</p>
+        <small>{{ note.timestamp | date:'short' }}</small>
+      </div>
+    </div>
+  </div>
+  

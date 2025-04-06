@@ -1,80 +1,124 @@
 .profile-container {
-    display: flex;
-    height: 100vh;
-    background: #f4f4f4;
-    transition: background 0.3s ease-in-out;
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(to right, #e0f2fe, #ffffff);
 }
 
-/* Dark Mode */
-.profile-container.dark-mode {
-    background: #222;
-    color: white;
+.profile-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 100%;
+  max-width: 600px;
+  transition: all 0.4s ease-in-out;
 }
 
-/* Sidebar */
-app-sidebar {
-    width: 250px;
-    position: fixed;
-    height: 100vh;
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-/* Profile Content */
-.profile-content {
-    flex: 1;
-    padding: 40px;
-    margin-left: 260px;
+.name {
+  font-size: 1.8rem;
+  color: #0f172a;
+  margin-bottom: 0.5rem;
 }
 
-/* Profile Header */
-.profile-header {
-    text-align: center;
-    margin-bottom: 30px;
+.bio {
+  color: #475569;
+  font-style: italic;
+  margin-bottom: 1.2rem;
 }
 
-/* Profile Image */
-.profile-pic {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    margin-top: -70px;
-    border: 5px solid white;
-    transition: transform 0.3s ease-in-out;
+.info p {
+  margin: 0.4rem 0;
+  color: #1e293b;
 }
 
-.profile-pic:hover {
-    transform: scale(1.1);
-}
-
-/* Badge & Rating */
-.broker-meta {
-    margin: 10px 0;
-}
-
-.badge {
-    background: gold;
-    padding: 5px 15px;
-    border-radius: 10px;
-    font-weight: bold;
-}
-
-/* Stats */
-.broker-stats {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: space-around;
+.stats {
+  display: flex;
+  justify-content: space-around;
+  margin: 1.5rem 0;
 }
 
 .stat-box {
-    background: rgba(0, 0, 0, 0.05);
-    padding: 15px;
-    border-radius: 10px;
-    min-width: 150px;
-    text-align: center;
+  background: #f1f5f9;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  width: 30%;
 }
 
-/* Toggle */
-.toggle-container {
-    text-align: right;
-    margin-bottom: 10px;
+.stat-box h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #0369a1;
+}
+
+.stat-box p {
+  margin: 0.2rem 0 0;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.skills, .certs {
+  text-align: left;
+  margin: 1rem 0;
+}
+
+.skills h4, .certs h4 {
+  margin-bottom: 0.5rem;
+  color: #1e3a8a;
+}
+
+.skills ul, .certs ul {
+  padding-left: 1.2rem;
+  color: #334155;
+}
+
+.edit-btn, .save-btn {
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 0.5rem;
+  background: #1d4ed8;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.edit-btn:hover, .save-btn:hover {
+  background: #2563eb;
+}
+
+.edit-form {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.edit-form label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #0f172a;
+}
+
+.edit-form input, .edit-form textarea {
+  width: 60%;
+  padding: 0.4rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.5rem;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 60px;
 }

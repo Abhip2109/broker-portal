@@ -54,18 +54,26 @@
         </li>
         <!-- Search Box -->
         <li class="nav-item d-none d-lg-block">
-          <form class="d-flex align-items-center search-form">
-            <input class="form-control me-2 search-input" type="search" placeholder="Search quotes..." aria-label="Search">
+          <form class="d-flex align-items-center search-form" (ngSubmit)="searchQuotes()">
+            <input
+              [(ngModel)]="searchTerm"
+              name="search"
+              class="form-control me-2 search-input"
+              type="search"
+              placeholder="Search quotes..."
+              aria-label="Search"
+            />
             <button class="btn btn-outline-light search-btn" type="submit">
               <i class="bi bi-search"></i>
             </button>
           </form>
+          
         </li>
         <!-- User Profile Dropdown -->
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle nav-animated" href="#" id="navbarDropdown" 
+          <a class="nav-link dropdown-toggle nav-animated" routerLink="/user-profile" id="navbarDropdown" 
              role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="assets/avatar.png" alt="User" class="rounded-circle user-avatar">
+            <img src="https://i.pravatar.cc/150?u=user" alt="User" class="rounded-circle user-avatar">
             <span class="d-none d-lg-inline ms-1">Broker</span>
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">

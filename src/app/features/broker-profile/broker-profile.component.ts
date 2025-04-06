@@ -1,70 +1,40 @@
+// broker-profile.component.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatDividerModule } from '@angular/material/divider';  // ✅ Import this
-
 
 @Component({
   selector: 'app-broker-profile',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
-    MatCardModule,
-    MatProgressBarModule,
-    MatSlideToggleModule,
-    MatDividerModule
-  ],
+  imports: [CommonModule, FormsModule],
   templateUrl: './broker-profile.component.html',
   styleUrls: ['./broker-profile.component.css']
 })
 export class BrokerProfileComponent {
-  isEditing = false;
-  darkMode = false;
-  profileCompletion = 90; // Represents profile completeness or performance score
-
   broker = {
-    profilePicture: 'assets/img/broker.jpg',
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-    phone: '+1 123-456-7890',
-    dob: '1985-06-15',
-    address: '123 Main St, New York, USA',
-    company: 'ABC Insurance Ltd.',
-    licenseNumber: 'XYZ-789456',
-    insuranceCompany: 'Lemonade Insurance',
-    brokerLevel: 'Gold',
-    rating: 4.8,
-    activePolicies: 120,
-    claimsProcessed: 85,
-    averagePolicyValue: '$5,000',
-    commissionEarned: '$85,000',
-    quotesSubmitted: 320,
-    policiesSold: 250,
-    clientsHandled: 180
+    id: 101,
+    name: 'John Carter',
+    email: 'john.carter@rentguard.com',
+    phone: '+1 (555) 987-6543',
+    licenseNumber: 'BRK-00985',
+    joiningDate: new Date('2021-06-15'),
+    totalQuotes: 235,
+    approvedPolicies: 178,
+    pendingQuotes: 25,
+    avatarUrl: 'https://i.pravatar.cc/150?img=12',
+    bio: 'Experienced insurance broker with a focus on delivering exceptional customer service and smart coverage solutions.',
+    skills: ['Quote Analysis', 'Policy Binding', 'Client Retention', 'Underwriting', 'Negotiation'],
+    certifications: ['CISR', 'CIC', 'API'],
   };
 
+  editMode = false;
+
   toggleEdit() {
-    this.isEditing = !this.isEditing;
+    this.editMode = !this.editMode;
   }
 
   saveProfile() {
-    this.isEditing = false;
-    this.profileCompletion = Math.min(this.profileCompletion + 5, 100);
+    this.editMode = false;
+    alert('Profile updated successfully!');
   }
-
-  toggleDarkMode() {
-    this.darkMode = !this.darkMode;
-  }
-}
+} 
