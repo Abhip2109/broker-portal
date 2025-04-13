@@ -10,6 +10,29 @@
     </select>
   </div>
 
+
+  <div class="filters-row">
+    <input type="text" [(ngModel)]="searchTerm" (input)="filterQuotes()" placeholder="Search quotes..." />
+  
+    <select [(ngModel)]="selectedStatus" (change)="filterQuotes()">
+      <option value="">All Statuses</option>
+      <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+    </select>
+  
+    <select [(ngModel)]="sortField" (change)="filterQuotes()">
+      <option value="createdDate">Date Created</option>
+      <option value="premium">Premium</option>
+    </select>
+  
+    <select [(ngModel)]="sortDirection" (change)="filterQuotes()">
+      <option value="desc">Descending</option>
+      <option value="asc">Ascending</option>
+    </select>
+  
+    <button class="create-quote-btn" routerLink="/quotes/new">Create New Quote</button>
+  </div>
+  
+
   <!-- Quote Table -->
   <table class="quote-table">
     <thead>

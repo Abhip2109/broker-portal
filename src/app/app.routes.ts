@@ -11,6 +11,8 @@ import { BrokerProfileComponent } from './features/broker-profile/broker-profile
 import { LeaderboardComponent } from './features/leaderboard/leaderboard.component';
 import { NotificationsComponent } from './features/notifications/notifications.component';
 import { UserProfileComponent } from './features/user-profile/user-profile.component';
+import { RegisterComponent } from './features/auth/register/register.component';
+import { BrokerAdditionalInfoComponent } from './features/broker-additional-info/broker-additional-info.component';
 
 export const routes: Routes = [
   // Public Routes
@@ -18,6 +20,8 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'quotes/new', component: QuoteFormComponent },
   { path: 'user-profile', component:UserProfileComponent},
+  { path: 'register' , component:RegisterComponent},
+  { path: 'broker-additional-info', component:BrokerAdditionalInfoComponent},
   // Broker-Protected Routes inside the Layout
   {
     path: '',

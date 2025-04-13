@@ -1,54 +1,61 @@
-<!-- Add a heading for the portal -->
-<h2 class="portal-heading">Broker Portal</h2>
+<!-- login.component.html -->
+<div class="auth-container animate__animated animate__fadeIn">
+  <div class="auth-card">
+    <h2 class="auth-title">Broker Login</h2>
 
-<div class="container" [ngClass]="{'right-panel-active': isRightPanelActive}" id="container">
-  <!-- Sign Up Form -->
-  <div class="form-container sign-up-container">
-    <form (submit)="$event.preventDefault()">
-      <h1>Create Account</h1>
-      <div class="social-container">
-        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+    <form #loginForm="ngForm" (ngSubmit)="submitForm()">
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          [(ngModel)]="email"
+          name="email"
+          placeholder="Enter your email"
+          required
+          email
+          #emailInput="ngModel"
+        />
+        <div *ngIf="emailInput.invalid && emailInput.touched" class="error-msg">
+          Enter a valid email address.
+        </div>
       </div>
-      <span>or use your email for registration</span>
-      <input type="text" placeholder="Name" />
-      <input type="email" placeholder="Email" />
-      <input type="password" placeholder="Password" />
-      <button>Sign Up</button>
+
+      <!-- Password -->
+      <div class="form-group password-group">
+        <label for="password">Password</label>
+        <div class="password-wrapper">
+          <input
+            id="password"
+            [type]="showPassword ? 'text' : 'password'"
+            [(ngModel)]="password"
+            name="password"
+            placeholder="Enter your password"
+            required
+            minlength="8"
+            #passwordInput="ngModel"
+          />
+          <button type="button" class="toggle-password" (click)="togglePassword()">
+            <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+          </button>
+        </div>
+        <div *ngIf="passwordInput.invalid && passwordInput.touched" class="error-msg">
+          Password is required (min 8 characters).
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="submit-btn" [disabled]="loginForm.invalid">
+        Login
+      </button>
+
+      <p class="toggle-text">
+        Don't have an account?
+        <a href="javascript:void(0)" (click)="navigateToRegister()" class="router-transition">
+          Register here
+        </a>
+      </p>
     </form>
-  </div>
-
-  <!-- Sign In Form -->
-  <div class="form-container sign-in-container">
-    <form (ngSubmit)="onLogin()">
-      <h1>Sign in</h1>
-      <div class="social-container">
-        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-      </div>
-      <span>or use your account</span>
-      <input type="email" placeholder="Email" [(ngModel)]="email" name="email" />
-      <input type="password" placeholder="Password" [(ngModel)]="password" name="password" />
-      <a href="#">Forgot your password?</a>
-      <button type="submit">Sign In</button>
-    </form>
-  </div>
-
-  <!-- Overlay Container -->
-  <div class="overlay-container">
-    <div class="overlay">
-      <div class="overlay-panel overlay-left">
-        <h1>Welcome Back!</h1>
-        <p>To keep connected with us please login with your personal info</p>
-        <button class="ghost" (click)="onSignInClick()">Sign In</button>
-      </div>
-      <div class="overlay-panel overlay-right">
-        <h1>Hello, Friend!</h1>
-        <p>Enter your personal details and start journey with us</p>
-        <button class="ghost" (click)="onSignUpClick()">Sign Up</button>
-      </div>
-    </div>
   </div>
 </div>

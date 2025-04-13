@@ -1,381 +1,247 @@
-<div class="quote-container animate__animated animate__fadeIn">
-  <!-- PROGRESS BAR (Horizontal) -->
-  <div class="progress-bar-container">
-    <div class="progress-steps">
-      <div
-        *ngFor="let s of steps; let i = index"
-        class="progress-step"
-        [class.active]="step === i + 1"
-      >
-        <div class="step-index">{{ i + 1 }}</div>
-        <div class="step-label">{{ s.label }}</div>
-      </div>
+<div class="quote-container">
+  <!-- Progress Indicator -->
+  <div class="steps">
+    <div *ngFor="let lbl of steps; let i = index" class="step" [class.active]="i === step">
+      <div class="circle">{{ i + 1 }}</div>
+      <div class="label">{{ lbl }}</div>
     </div>
     <div class="progress-line">
-      <div
-        class="progress-fill"
-        [style.width.%]="((step - 1) / (totalSteps - 1)) * 100"
-      ></div>
+      <div class="fill" [style.width.%]="(step) / (steps.length - 1) * 100"></div>
     </div>
   </div>
 
-  <!-- MAIN FORM BOX -->
-  <div class="quote-box shadow-xl rounded-3xl p-6 bg-gradient-to-br from-blue-50 to-white animate__animated animate__fadeInUp">
-    <h2 class="text-center text-3xl font-bold mb-6 text-blue-600">
-      Renters' Insurance Quote
-    </h2>
-
+  <!-- Form Box -->
+  <div class="quote-box">
     <!-- Step 1: Personal Info -->
-    <form *ngIf="step === 1" (ngSubmit)="nextStep()" #personalForm="ngForm">
-      <div class="form-group">
-        <label>Full Name</label>
-        <input
-          type="text"
-          class="form-control"
-          required
-          [(ngModel)]="quote.fullName"
-          name="fullName"
-          #fullName="ngModel"
-        />
-        <div *ngIf="fullName.invalid && fullName.touched" class="error">
-          Full Name is required
-        </div>
+    <form [formGroup]="personalForm" *ngIf="step === 0">
+      <h2>Personal Info</h2>
+      <div class="grid">
+        <label>
+          Full Name *
+          <input formControlName="fullName" placeholder="Enter your full name" />
+          <small *ngIf="personalForm.get('fullName')?.touched && personalForm.get('fullName')?.invalid">Full Name is required.</small>
+        </label>
+        <label>
+          Email *
+          <input formControlName="email" type="email" placeholder="you@example.com" />
+          <small *ngIf="personalForm.get('email')?.touched && personalForm.get('email')?.invalid">Valid Email is required.</small>
+        </label>
+        <label>
+          Phone *
+          <input formControlName="phone" placeholder="+1 123-456-7890" />
+          <small *ngIf="personalForm.get('phone')?.touched && personalForm.get('phone')?.invalid">Phone is required.</small>
+        </label>
+        <label>
+          Date of Birth *
+          <input formControlName="dob" type="date" />
+          <small *ngIf="personalForm.get('dob')?.touched && personalForm.get('dob')?.invalid">Date of Birth is required.</small>
+        </label>
+        <label>
+          Marital Status *
+          <select formControlName="maritalStatus">
+            <option value="">Select Status</option>
+            <option value="single">Single</option>
+            <option value="married">Married</option>
+          </select>
+          <small *ngIf="personalForm.get('maritalStatus')?.touched && personalForm.get('maritalStatus')?.invalid">Required.</small>
+        </label>
+        <label>
+          Occupation
+          <input formControlName="occupation" placeholder="Optional" />
+        </label>
       </div>
-
-      <div class="form-group">
-        <label>Email</label>
-        <input
-          type="email"
-          class="form-control"
-          required
-          [(ngModel)]="quote.email"
-          name="email"
-          #email="ngModel"
-        />
-        <div *ngIf="email.invalid && email.touched" class="error">
-          Valid Email is required
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label>Phone</label>
-        <input
-          type="text"
-          class="form-control"
-          required
-          [(ngModel)]="quote.phone"
-          name="phone"
-          #phone="ngModel"
-        />
-        <div *ngIf="phone.invalid && phone.touched" class="error">
-          Phone is required
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label>Date of Birth</label>
-        <input
-          type="date"
-          class="form-control"
-          [(ngModel)]="quote.dob"
-          name="dob"
-        />
-      </div>
-
-      <div class="form-group">
-        <label>Marital Status</label>
-        <select class="form-control" [(ngModel)]="quote.maritalStatus" name="maritalStatus">
-          <option value="" disabled selected>Select Status</option>
-          <option value="single">Single</option>
-          <option value="married">Married</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label>Occupation (Optional)</label>
-        <input
-          type="text"
-          class="form-control"
-          [(ngModel)]="quote.occupation"
-          name="occupation"
-        />
-      </div>
-
-      <button class="btn btn-primary w-100 mt-4" type="submit">Next</button>
     </form>
 
     <!-- Step 2: Property Details -->
-    <div *ngIf="step === 2">
-      <div class="form-group">
-        <label>Address</label>
-        <input type="text" class="form-control" [(ngModel)]="quote.address" name="address" required />
+    <form [formGroup]="propertyForm" *ngIf="step === 1">
+      <h2>Property Details</h2>
+      <div class="grid">
+        <label>
+          Address *
+          <input formControlName="address" placeholder="Street address" />
+          <small *ngIf="propertyForm.get('address')?.touched && propertyForm.get('address')?.invalid">Required.</small>
+        </label>
+        <label>
+          ZIP Code *
+          <input formControlName="zipCode" placeholder="ZIP Code" />
+          <small *ngIf="propertyForm.get('zipCode')?.touched && propertyForm.get('zipCode')?.invalid">Required.</small>
+        </label>
+        <label>
+          Property Type *
+          <select formControlName="propertyType">
+            <option value="">Select</option>
+            <option value="apartment">Apartment</option>
+            <option value="house">House</option>
+            <option value="condo">Condo</option>
+          </select>
+          <small *ngIf="propertyForm.get('propertyType')?.touched && propertyForm.get('propertyType')?.invalid">Required.</small>
+        </label>
+        <label>
+          Square Footage *
+          <input formControlName="sqFootage" type="number" placeholder="e.g., 1200" />
+          <small *ngIf="propertyForm.get('sqFootage')?.touched && propertyForm.get('sqFootage')?.invalid">Must be at least 100.</small>
+        </label>
+        <label>
+          Building Age *
+          <input formControlName="buildingAge" type="number" placeholder="Years" />
+          <small *ngIf="propertyForm.get('buildingAge')?.touched && propertyForm.get('buildingAge')?.invalid">Required.</small>
+        </label>
+        <label>
+          Bedrooms *
+          <input formControlName="bedrooms" type="number" placeholder="Number of bedrooms" />
+          <small *ngIf="propertyForm.get('bedrooms')?.touched && propertyForm.get('bedrooms')?.invalid">Required.</small>
+        </label>
+        <label>
+          Floor
+          <input formControlName="floor" type="number" placeholder="If applicable" />
+        </label>
+        <label>
+          Construction Type *
+          <input formControlName="constructionType" placeholder="e.g., Wood, Brick" />
+          <small *ngIf="propertyForm.get('constructionType')?.touched && propertyForm.get('constructionType')?.invalid">Required.</small>
+        </label>
+        <label>
+          Fire Hydrant Distance *
+          <select formControlName="fireHydrantDistance">
+            <option value="">Select</option>
+            <option value="<100ft">&lt;100ft</option>
+            <option value="100-500ft">100-500ft</option>
+            <option value=">500ft">&gt;500ft</option>
+          </select>
+          <small *ngIf="propertyForm.get('fireHydrantDistance')?.touched && propertyForm.get('fireHydrantDistance')?.invalid">Required.</small>
+        </label>
       </div>
-
-      <div class="form-group">
-        <label>ZIP Code</label>
-        <input type="text" class="form-control" [(ngModel)]="quote.zipCode" name="zipCode" required />
-      </div>
-
-      <div class="form-group">
-        <label>Property Type</label>
-        <select class="form-control" [(ngModel)]="quote.propertyType" name="propertyType" required>
-          <option value="" disabled selected>Select Property Type</option>
-          <option value="apartment">Apartment</option>
-          <option value="house">House</option>
-          <option value="condo">Condo</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label>Square Footage</label>
-        <input
-          type="number"
-          class="form-control"
-          [(ngModel)]="quote.sqFootage"
-          name="sqFootage"
-          required
-        />
-      </div>
-
-      <div class="form-group">
-        <label>Building Age (in years)</label>
-        <input
-          type="number"
-          class="form-control"
-          [(ngModel)]="quote.buildingAge"
-          name="buildingAge"
-          required
-        />
-      </div>
-
-      <div class="form-group">
-        <label>Number of Bedrooms</label>
-        <input
-          type="number"
-          class="form-control"
-          [(ngModel)]="quote.bedrooms"
-          name="bedrooms"
-          required
-        />
-      </div>
-
-      <div class="form-group">
-        <label>Floor (if applicable)</label>
-        <input
-          type="number"
-          class="form-control"
-          [(ngModel)]="quote.floor"
-          name="floor"
-          min="1"
-        />
-      </div>
-
-      <div class="form-group">
-        <label>Construction Type</label>
-        <input
-          type="text"
-          class="form-control"
-          [(ngModel)]="quote.constructionType"
-          name="constructionType"
-        />
-      </div>
-
-      <div class="form-group">
-        <label>Distance to Fire Hydrant</label>
-        <select class="form-control" [(ngModel)]="quote.fireHydrantDistance" name="fireHydrantDistance">
-          <option value="" disabled selected>Select Distance</option>
-          <option value="<100ft">Less than 100 ft</option>
-          <option value="100-500ft">100 - 500 ft</option>
-          <option value=">500ft">More than 500 ft</option>
-        </select>
-      </div>
-
-      <div class="btn-group mt-4">
-        <button class="btn btn-secondary" (click)="prevStep()">Back</button>
-        <button class="btn btn-primary ml-2" (click)="nextStep()">Next</button>
-      </div>
-    </div>
+    </form>
 
     <!-- Step 3: Coverage Selection -->
-    <div *ngIf="step === 3">
-      <div class="form-group">
-        <label>Personal Property Coverage</label>
-        <select
-          class="form-control"
-          [(ngModel)]="quote.personalPropertyCoverage"
-          name="personalPropertyCoverage"
-        >
-          <option [value]="20000">$20,000</option>
-          <option [value]="50000">$50,000</option>
-          <option [value]="100000">$100,000</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label>Liability Coverage</label>
-        <select class="form-control" [(ngModel)]="quote.liabilityCoverage" name="liabilityCoverage">
-          <option [value]="100000">$100,000</option>
-          <option [value]="300000">$300,000</option>
-          <option [value]="500000">$500,000</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label>Deductible</label>
-        <select class="form-control" [(ngModel)]="quote.deductible" name="deductible">
-          <option [value]="250">$250</option>
-          <option [value]="500">$500</option>
-          <option [value]="1000">$1,000</option>
-        </select>
-      </div>
-
-      <p class="mt-3 font-semibold">Additional Coverages:</p>
-      <div class="coverage-options">
+    <form [formGroup]="coverageForm" *ngIf="step === 2">
+      <h2>Coverage</h2>
+      <div class="grid">
         <label>
-          <input type="checkbox" [(ngModel)]="quote.additionalLivingExpenseCoverage" name="additionalLivingExpenseCoverage" />
-          Additional Living Expense Coverage
+          Personal Property Coverage *
+          <select formControlName="personalPropertyCoverage">
+            <option [value]="20000">$20,000</option>
+            <option [value]="50000">$50,000</option>
+            <option [value]="100000">$100,000</option>
+          </select>
         </label>
         <label>
-          <input type="checkbox" [(ngModel)]="quote.earthquakeCoverage" name="earthquakeCoverage" />
-          Earthquake Coverage
+          Liability Coverage *
+          <select formControlName="liabilityCoverage">
+            <option [value]="100000">$100,000</option>
+            <option [value]="300000">$300,000</option>
+            <option [value]="500000">$500,000</option>
+          </select>
         </label>
         <label>
-          <input type="checkbox" [(ngModel)]="quote.floodCoverage" name="floodCoverage" />
-          Flood Coverage
+          Deductible *
+          <select formControlName="deductible">
+            <option [value]="250">$250</option>
+            <option [value]="500">$500</option>
+            <option [value]="1000">$1,000</option>
+          </select>
         </label>
-        <label>
-          <input type="checkbox" [(ngModel)]="quote.identityTheftProtection" name="identityTheftProtection" />
-          Identity Theft Protection
-        </label>
+        <label><input type="checkbox" formControlName="additionalLivingExpenseCoverage" /> Additional Living Expense Coverage</label>
+        <label><input type="checkbox" formControlName="earthquakeCoverage" /> Earthquake Coverage</label>
+        <label><input type="checkbox" formControlName="floodCoverage" /> Flood Coverage</label>
+        <label><input type="checkbox" formControlName="identityTheftProtection" /> Identity Theft Protection</label>
       </div>
-
-      <div class="btn-group mt-4">
-        <button class="btn btn-secondary" (click)="prevStep()">Back</button>
-        <button class="btn btn-primary ml-2" (click)="nextStep()">Next</button>
-      </div>
-    </div>
+    </form>
 
     <!-- Step 4: Safety & Discounts -->
-    <div *ngIf="step === 4">
-      <p class="font-semibold">Select Safety Features & Discounts:</p>
-      <div class="safety-grid">
-        <label>
-          <input type="checkbox" [(ngModel)]="quote.fireProtection" name="fireProtection" />
-          Fire Protection (-10%)
-        </label>
-        <label>
-          <input type="checkbox" [(ngModel)]="quote.securityCameras" name="securityCameras" />
-          Security Cameras (-5%)
-        </label>
-        <label>
-          <input type="checkbox" [(ngModel)]="quote.gatedCommunity" name="gatedCommunity" />
-          Gated Community (-7%)
-        </label>
-        <label>
-          <input type="checkbox" [(ngModel)]="quote.smokeDetectors" name="smokeDetectors" />
-          Smoke Detectors (-3%)
-        </label>
-        <label>
-          <input type="checkbox" [(ngModel)]="quote.sprinklerSystem" name="sprinklerSystem" />
-          Sprinkler System (-4%)
-        </label>
-        <label>
-          <input type="checkbox" [(ngModel)]="quote.burglarAlarm" name="burglarAlarm" />
-          Burglar Alarm (-5%)
-        </label>
-        <label>
-          <input type="checkbox" [(ngModel)]="quote.deadboltLocks" name="deadboltLocks" />
-          Deadbolt Locks (-2%)
-        </label>
-        <label>
-          <input type="checkbox" [(ngModel)]="quote.multiPolicyDiscount" name="multiPolicyDiscount" />
-          Multi-Policy Discount (-5%)
-        </label>
-        <label>
-          <input type="checkbox" [(ngModel)]="quote.nonSmoker" name="nonSmoker" />
-          Non-Smoker (-5%)
-        </label>
-        <label>
-          <input type="checkbox" [(ngModel)]="quote.autoPayEnrollment" name="autoPayEnrollment" />
-          Auto-Pay Enrollment (-2%)
-        </label>
+    <form [formGroup]="safetyForm" *ngIf="step === 3">
+      <h2>Safety & Discounts</h2>
+      <div class="grid">
+        <label><input type="checkbox" formControlName="fireProtection" /> Fire Protection (-10%)</label>
+        <label><input type="checkbox" formControlName="securityCameras" /> Security Cameras (-5%)</label>
+        <label><input type="checkbox" formControlName="gatedCommunity" /> Gated Community (-7%)</label>
+        <label><input type="checkbox" formControlName="smokeDetectors" /> Smoke Detectors (-3%)</label>
+        <label><input type="checkbox" formControlName="sprinklerSystem" /> Sprinkler System (-4%)</label>
+        <label><input type="checkbox" formControlName="burglarAlarm" /> Burglar Alarm (-5%)</label>
+        <label><input type="checkbox" formControlName="deadboltLocks" /> Deadbolt Locks (-2%)</label>
+        <label><input type="checkbox" formControlName="multiPolicyDiscount" /> Multi-Policy Discount (-5%)</label>
+        <label><input type="checkbox" formControlName="nonSmoker" /> Non-Smoker Discount (-5%)</label>
+        <label><input type="checkbox" formControlName="autoPayEnrollment" /> Auto-Pay Enrollment (-2%)</label>
       </div>
-
-      <div class="btn-group mt-4">
-        <button class="btn btn-secondary" (click)="prevStep()">Back</button>
-        <button class="btn btn-primary ml-2" (click)="nextStep()">Next</button>
-      </div>
-    </div>
+    </form>
 
     <!-- Step 5: Insurance History & Credit -->
-    <div *ngIf="step === 5">
-      <div class="form-group">
-        <label>Previous Claims</label>
-        <input
-          type="number"
-          class="form-control"
-          [(ngModel)]="quote.previousClaims"
-          name="previousClaims"
-          min="0"
-        />
+    <form [formGroup]="historyForm" *ngIf="step === 4">
+      <h2>History & Credit</h2>
+      <div class="grid">
+        <label>
+          Previous Claims
+          <input formControlName="previousClaims" type="number" placeholder="0" />
+        </label>
+        <label>
+          Years with Previous Insurer
+          <input formControlName="yearsWithPreviousInsurer" type="number" placeholder="0" />
+        </label>
+        <label>
+          Continuous Coverage *
+          <select formControlName="hasContinuousCoverage">
+            <option [value]="false">No</option>
+            <option [value]="true">Yes</option>
+          </select>
+        </label>
+        <label>
+          Credit Score *
+          <select formControlName="creditScoreBracket">
+            <option value="">Select</option>
+            <option value="excellent">Excellent</option>
+            <option value="good">Good</option>
+            <option value="fair">Fair</option>
+            <option value="poor">Poor</option>
+          </select>
+          <small *ngIf="historyForm.get('creditScoreBracket')?.touched && historyForm.get('creditScoreBracket')?.invalid">Required.</small>
+        </label>
       </div>
-      <div class="form-group">
-        <label>Years with Previous Insurer</label>
-        <input
-          type="number"
-          class="form-control"
-          [(ngModel)]="quote.yearsWithPreviousInsurer"
-          name="yearsWithPreviousInsurer"
-          min="0"
-        />
-      </div>
-      <div class="form-group">
-        <label>Has Continuous Coverage</label>
-        <select
-          class="form-control"
-          [(ngModel)]="quote.hasContinuousCoverage"
-          name="hasContinuousCoverage"
-        >
-          <option [ngValue]="false">No</option>
-          <option [ngValue]="true">Yes</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Credit Score</label>
-        <select class="form-control" [(ngModel)]="quote.creditScoreBracket" name="creditScoreBracket">
-          <option value="" disabled selected>Select Credit Score</option>
-          <option value="excellent">Excellent</option>
-          <option value="good">Good</option>
-          <option value="fair">Fair</option>
-          <option value="poor">Poor</option>
-        </select>
-      </div>
-
-      <div class="btn-group mt-4">
-        <button class="btn btn-secondary" (click)="prevStep()">Back</button>
-        <button class="btn btn-primary ml-2" (click)="nextStep()">Next</button>
-      </div>
-    </div>
+    </form>
 
     <!-- Step 6: Review & Submit -->
-    <div *ngIf="step === 6">
-      <p class="text-lg font-semibold mb-3">Estimated Premium:</p>
-      <h3 class="text-3xl text-blue-600 font-bold my-3">${{ finalPremium }}</h3>
+    <div *ngIf="step === 5" class="review-step">
+      <h2>Review & Submit</h2>
+      <div class="summary">
+        <h3>Personal Info</h3>
+        <p><strong>Name:</strong> {{ personalForm.value.fullName }}</p>
+        <p><strong>Email:</strong> {{ personalForm.value.email }}</p>
+        <p><strong>Phone:</strong> {{ personalForm.value.phone }}</p>
+        <p><strong>DOB:</strong> {{ personalForm.value.dob }}</p>
+        <p><strong>Marital Status:</strong> {{ personalForm.value.maritalStatus }}</p>
 
-      <!-- Simple summary (optional) -->
-      <div class="summary-box">
-        <p class="mb-1"><strong>Name:</strong> {{ quote.fullName }}</p>
-        <p class="mb-1"><strong>Property Type:</strong> {{ quote.propertyType }}</p>
-        <p class="mb-1"><strong>Personal Property Coverage:</strong> {{ quote.personalPropertyCoverage | currency }}</p>
-        <p class="mb-1"><strong>Liability Coverage:</strong> {{ quote.liabilityCoverage | currency }}</p>
-        <p class="mb-1"><strong>Deductible:</strong> ${{ quote.deductible }}</p>
-        <!-- Add more fields as needed -->
-      </div>
+        <h3>Property Details</h3>
+        <p><strong>Address:</strong> {{ propertyForm.value.address }}</p>
+        <p><strong>ZIP:</strong> {{ propertyForm.value.zipCode }}</p>
+        <p><strong>Type:</strong> {{ propertyForm.value.propertyType }}</p>
 
-      <div class="btn-group mt-4">
-        <button class="btn btn-secondary" (click)="prevStep()">Back</button>
-        <button class="btn btn-success ml-2" (click)="submitQuote()">Confirm & Submit</button>
+        <h3>Coverage</h3>
+        <p><strong>Personal Property:</strong> {{ coverageForm.value.personalPropertyCoverage | currency }}</p>
+        <p><strong>Liability:</strong> {{ coverageForm.value.liabilityCoverage | currency }}</p>
+        <p><strong>Deductible:</strong> ${{ coverageForm.value.deductible }}</p>
+
+        <h3>Safety & Discounts</h3>
+        <div class="safety-summary">
+          <p *ngFor="let item of safetyForm.value | keyvalue">
+            <strong>{{ item.key }}:</strong> {{ item.value ? 'Yes' : 'No' }}
+          </p>
+        </div>
+
+        <h3>History & Credit</h3>
+        <p><strong>Previous Claims:</strong> {{ historyForm.value.previousClaims }}</p>
+        <p><strong>Credit Score:</strong> {{ historyForm.value.creditScoreBracket }}</p>
       </div>
+      <h3 class="premium">Estimated Premium: {{ finalPremium | currency }}</h3>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="nav-buttons">
+      <button class="btn btn-secondary" (click)="back()" [disabled]="step === 0">Back</button>
+      <button
+        class="btn btn-primary"
+        (click)="step === steps.length - 1 ? submit() : next()"
+        [disabled]="step < steps.length - 1 && currentForm.invalid">
+        {{ step === steps.length - 1 ? 'Submit' : 'Next' }}
+      </button>
     </div>
   </div>
 </div>

@@ -1,0 +1,90 @@
+<!-- register.component.html -->
+<div class="auth-container animate__animated animate__fadeIn">
+    <div class="auth-card">
+      <h2 class="auth-title">Broker Registration</h2>
+  
+      <form #registerForm="ngForm" (ngSubmit)="submitForm()">
+        <!-- Name -->
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input
+            id="name"
+            type="text"
+            [(ngModel)]="name"
+            name="name"
+            placeholder="Enter your full name"
+            required
+            #nameInput="ngModel"
+          />
+          <div *ngIf="nameInput.invalid && nameInput.touched" class="error-msg">
+            Name is required.
+          </div>
+        </div>
+  
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            [(ngModel)]="email"
+            name="email"
+            placeholder="Enter your email"
+            required
+            email
+            #emailInput="ngModel"
+          />
+          <div *ngIf="emailInput.invalid && emailInput.touched" class="error-msg">
+            Enter a valid email address.
+          </div>
+        </div>
+  
+        <!-- Password -->
+        <div class="form-group password-group">
+          <label for="password">Password</label>
+          <div class="password-wrapper">
+            <input
+              id="password"
+              [type]="showPassword ? 'text' : 'password'"
+              [(ngModel)]="password"
+              name="password"
+              placeholder="Enter your password"
+              required
+              #passwordInput="ngModel"
+              (input)="updatePasswordChecklist()"
+            />
+            <button type="button" class="toggle-password" (click)="togglePassword()">
+              <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+            </button>
+          </div>
+          <ul *ngIf="passwordInput.touched" class="password-checklist">
+            <li *ngIf="!validLength" class="invalid">Minimum 8 characters</li>
+            <li *ngIf="!validUppercase" class="invalid">At least one uppercase letter</li>
+            <li *ngIf="!validLowercase" class="invalid">At least one lowercase letter</li>
+            <li *ngIf="!validNumber" class="invalid">At least one number</li>
+            <li *ngIf="!validSpecial" class="invalid">At least one special character</li>
+          </ul>
+        </div>
+  
+     
+        <!-- Submit Button -->
+        <button type="submit" class="submit-btn"  [disabled]="
+        registerForm.invalid ||
+        !validLength ||
+        !validUppercase ||
+        !validLowercase ||
+        !validNumber ||
+        !validSpecial">
+          Register
+        </button>
+  
+        <p class="toggle-text">
+          Already have an account?
+          <a [routerLink]="['/login']" class="router-transition">
+            Login here
+          </a>
+        </p>
+      </form>
+    </div>
+  </div>
+  

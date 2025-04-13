@@ -1,0 +1,129 @@
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: rgba(240, 248, 255, 0.6);
+    backdrop-filter: blur(6px);
+    padding: 1rem;
+  }
+  
+  .auth-card {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    animation: fadeInUp 0.5s ease-in-out;
+  }
+  
+  .auth-title {
+    text-align: center;
+    color: #003366;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  
+  input:focus {
+    border-color: #007bff;
+  }
+  
+  .error-msg {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+  }
+  
+  .password-wrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  .toggle-password {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #666;
+  }
+  
+  .password-checklist {
+    list-style: none;
+    padding-left: 1rem;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+  }
+  
+  .password-checklist li {
+    color: red;
+  }
+  
+  .password-checklist li.valid {
+    color: green;
+  }
+  
+  .submit-btn {
+    width: 100%;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-btn:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+  }
+  
+  .toggle-text {
+    text-align: center;
+    margin-top: 1rem;
+  }
+  
+  .toggle-text a {
+    color: #007bff;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .auth-card {
+      padding: 1.5rem;
+      margin: 0 1rem;
+    }
+  }
+  

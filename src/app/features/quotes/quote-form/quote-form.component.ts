@@ -1,246 +1,148 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';   // For *ngIf, *ngFor
-import { FormsModule } from '@angular/forms';       // For [(ngModel)]
-
-// Full model with all factors
-interface QuoteOptions {
-  // Step 1: Personal Info
-  fullName: string;
-  email: string;
-  phone: string;
-  dob: string; // Use string for simplicity; can be Date
-  maritalStatus: string;
-  occupation: string;
-
-  // Step 2: Property Details
-  address: string;
-  zipCode: string;
-  propertyType: string;
-  sqFootage: number;
-  buildingAge: number;
-  bedrooms: number;
-  floor: number;
-  constructionType: string;
-  fireHydrantDistance: string;
-
-  // Step 3: Coverage Selection
-  personalPropertyCoverage: number; // e.g. 20000, 50000, 100000
-  liabilityCoverage: number;        // e.g. 100000, 300000, 500000
-  deductible: number;               // e.g. 250, 500, 1000
-  additionalLivingExpenseCoverage: boolean;
-  earthquakeCoverage: boolean;
-  floodCoverage: boolean;
-  identityTheftProtection: boolean;
-
-  // Step 4: Safety & Discounts
-  fireProtection: boolean;
-  securityCameras: boolean;
-  gatedCommunity: boolean;
-  smokeDetectors: boolean;
-  sprinklerSystem: boolean;
-  burglarAlarm: boolean;
-  deadboltLocks: boolean;
-  multiPolicyDiscount: boolean;
-  nonSmoker: boolean;
-  autoPayEnrollment: boolean;
-
-  // Step 5: Insurance History & Credit
-  previousClaims: number;
-  yearsWithPreviousInsurer: number;
-  hasContinuousCoverage: boolean;
-  creditScoreBracket: string; // 'excellent' | 'good' | 'fair' | 'poor'
-}
-
-// Define a helper type for keys that are booleans
-type BooleanFields = { [K in keyof QuoteOptions]: QuoteOptions[K] extends boolean ? K : never }[keyof QuoteOptions];
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 
 @Component({
   selector: 'app-quote-form',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './quote-form.component.html',
   styleUrls: ['./quote-form.component.css']
 })
-export class QuoteFormComponent {
-  // Steps for the progress bar
-  step = 1;
-  totalSteps = 6;
+export class QuoteFormComponent implements OnInit {
   steps = [
-    { label: 'Personal Info' },
-    { label: 'Property' },
-    { label: 'Coverage' },
-    { label: 'Safety' },
-    { label: 'History & Credit' },
-    { label: 'Review' }
+    'Personal Info',
+    'Property',
+    'Coverage',
+    'Safety',
+    'History & Credit',
+    'Review'
   ];
+  step = 0;
 
-  // Base Premium and Final Premium
-  basePremium = 300;
-  finalPremium = this.basePremium;
+  // Form groups for each step
+  personalForm!: FormGroup;
+  propertyForm!: FormGroup;
+  coverageForm!: FormGroup;
+  safetyForm!: FormGroup;
+  historyForm!: FormGroup;
 
-  // Initialize quote with default values
-  quote: QuoteOptions = {
-    // Step 1
-    fullName: '',
-    email: '',
-    phone: '',
-    dob: '',
-    maritalStatus: '',
-    occupation: '',
+  finalPremium = 0;
 
-    // Step 2
-    address: '',
-    zipCode: '',
-    propertyType: '',
-    sqFootage: 0,
-    buildingAge: 0,
-    bedrooms: 0,
-    floor: 1,
-    constructionType: '',
-    fireHydrantDistance: '',
+  constructor(private fb: FormBuilder) {}
 
-    // Step 3
-    personalPropertyCoverage: 20000,
-    liabilityCoverage: 100000,
-    deductible: 500,
-    additionalLivingExpenseCoverage: false,
-    earthquakeCoverage: false,
-    floodCoverage: false,
-    identityTheftProtection: false,
+  ngOnInit() {
+    this.personalForm = this.fb.group({
+      fullName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phone: ['', Validators.required],
+      dob: ['', Validators.required],
+      maritalStatus: ['', Validators.required],
+      occupation: ['']
+    });
 
-    // Step 4
-    fireProtection: false,
-    securityCameras: false,
-    gatedCommunity: false,
-    smokeDetectors: false,
-    sprinklerSystem: false,
-    burglarAlarm: false,
-    deadboltLocks: false,
-    multiPolicyDiscount: false,
-    nonSmoker: false,
-    autoPayEnrollment: false,
+    this.propertyForm = this.fb.group({
+      address: ['', Validators.required],
+      zipCode: ['', Validators.required],
+      propertyType: ['', Validators.required],
+      sqFootage: [null, [Validators.required, Validators.min(100)]],
+      buildingAge: [null, [Validators.required, Validators.min(0)]],
+      bedrooms: [null, [Validators.required, Validators.min(0)]],
+      floor: [1, [Validators.min(1)]],
+      constructionType: ['', Validators.required],
+      fireHydrantDistance: ['', Validators.required]
+    });
 
-    // Step 5
-    previousClaims: 0,
-    yearsWithPreviousInsurer: 0,
-    hasContinuousCoverage: false,
-    creditScoreBracket: ''
-  };
+    this.coverageForm = this.fb.group({
+      personalPropertyCoverage: [20000, Validators.required],
+      liabilityCoverage: [100000, Validators.required],
+      deductible: [500, Validators.required],
+      additionalLivingExpenseCoverage: [false],
+      earthquakeCoverage: [false],
+      floodCoverage: [false],
+      identityTheftProtection: [false]
+    });
 
-  // Move to next step and recalc premium
-  nextStep() {
-    if (this.step < this.totalSteps) {
+    this.safetyForm = this.fb.group({
+      fireProtection: [false],
+      securityCameras: [false],
+      gatedCommunity: [false],
+      smokeDetectors: [false],
+      sprinklerSystem: [false],
+      burglarAlarm: [false],
+      deadboltLocks: [false],
+      multiPolicyDiscount: [false],
+      nonSmoker: [false],
+      autoPayEnrollment: [false]
+    });
+
+    this.historyForm = this.fb.group({
+      previousClaims: [0, [Validators.min(0)]],
+      yearsWithPreviousInsurer: [0, [Validators.min(0)]],
+      hasContinuousCoverage: [false],
+      creditScoreBracket: ['', Validators.required]
+    });
+  }
+
+  // Return current active form group for validation
+  get currentForm(): FormGroup {
+    return [
+      this.personalForm,
+      this.propertyForm,
+      this.coverageForm,
+      this.safetyForm,
+      this.historyForm
+    ][this.step] as FormGroup;
+  }
+
+  next() {
+    if (this.step < this.steps.length - 1) {
+      if (this.currentForm.invalid) {
+        this.currentForm.markAllAsTouched();
+        return;
+      }
       this.step++;
-      this.calculatePremium();
+      if (this.step === this.steps.length - 1) {
+        this.calculatePremium();
+      }
     }
   }
 
-  // Move to previous step and recalc premium
-  prevStep() {
-    if (this.step > 1) {
+  back() {
+    if (this.step > 0) {
       this.step--;
-      this.calculatePremium();
     }
   }
 
-  // Toggle a boolean field (only for fields of type boolean)
-  toggleField(field: BooleanFields) {
-    this.quote[field] = !this.quote[field];
-    this.calculatePremium();
-  }
-
-  // Example: Specific toggle functions (if desired)
-  toggleInsurance(type: 'carInsurance' | 'petInsurance') {
-    // This function is available if you have dedicated keys,
-    // otherwise use toggleField with proper BooleanFields union.
-    // (If not needed, you can remove this.)
-  }
-
-  // Calculate user's age from dob
-  getAgeFromDOB(): number {
-    if (!this.quote.dob) return 0;
-    const today = new Date();
-    const birthDate = new Date(this.quote.dob);
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const m = today.getMonth() - birthDate.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
-    }
-    return age;
-  }
-
-  // MASTER Premium Calculation using various factors
+  // A sample premium calculation based on some inputs
   calculatePremium() {
-    let premium = this.basePremium;
-
-    // STEP 1: Personal Info Adjustments
-    const age = this.getAgeFromDOB();
-    if (age > 0 && age < 25) premium *= 1.05;  // +5% for young applicants
-    if (age > 50) premium *= 0.95;              // -5% for older applicants
-    if (this.quote.maritalStatus === 'married') premium *= 0.97; // -3%
-
-    // STEP 2: Property Details
-    if (this.quote.propertyType === 'house') premium += 50;
-    if (this.quote.propertyType === 'condo') premium += 30;
-    if (this.quote.sqFootage > 2000) premium += 75;
-    else if (this.quote.sqFootage > 1000) premium += 30;
-    if (this.quote.buildingAge > 30) premium += 20;
-    if (this.quote.buildingAge < 5) premium -= 20;
-    if (this.quote.bedrooms > 3) premium += 30;
-
-    // STEP 3: Coverage Selection
-    if (this.quote.personalPropertyCoverage === 50000) premium += 100;
-    else if (this.quote.personalPropertyCoverage === 100000) premium += 200;
-    if (this.quote.liabilityCoverage === 300000) premium += 50;
-    else if (this.quote.liabilityCoverage === 500000) premium += 100;
-    if (this.quote.deductible === 250) premium += 50;
-    if (this.quote.deductible === 1000) premium -= 50;
-    if (this.quote.additionalLivingExpenseCoverage) premium += 50;
-    if (this.quote.earthquakeCoverage) premium += 80;
-    if (this.quote.floodCoverage) premium += 60;
-    if (this.quote.identityTheftProtection) premium += 40;
-
-    // STEP 4: Safety & Discounts
-    let discountPercent = 0;
-    if (this.quote.fireProtection) discountPercent += 10;
-    if (this.quote.securityCameras) discountPercent += 5;
-    if (this.quote.gatedCommunity) discountPercent += 7;
-    if (this.quote.smokeDetectors) discountPercent += 3;
-    if (this.quote.sprinklerSystem) discountPercent += 4;
-    if (this.quote.burglarAlarm) discountPercent += 5;
-    if (this.quote.deadboltLocks) discountPercent += 2;
-    if (this.quote.multiPolicyDiscount) discountPercent += 5;
-    if (this.quote.nonSmoker) discountPercent += 5;
-    if (this.quote.autoPayEnrollment) discountPercent += 2;
-
-    // STEP 5: Insurance History & Credit
-    premium += this.quote.previousClaims * 50;
-    if (this.quote.yearsWithPreviousInsurer >= 3) discountPercent += 3;
-    if (this.quote.yearsWithPreviousInsurer >= 5) discountPercent += 2;
-    if (this.quote.hasContinuousCoverage) discountPercent += 5;
-    switch (this.quote.creditScoreBracket) {
-      case 'excellent':
-        discountPercent += 5;
-        break;
-      case 'good':
-        break;
-      case 'fair':
-        premium *= 1.05;
-        break;
-      case 'poor':
-        premium *= 1.1;
-        break;
-    }
-
-    // Apply total discount
-    premium = premium - (premium * discountPercent) / 100;
-    this.finalPremium = Math.max(50, +premium.toFixed(2));
+    let premium = 300;
+    const coverage = this.coverageForm.value;
+    premium += (coverage.personalPropertyCoverage / 10000) * 20;
+    premium += (coverage.liabilityCoverage / 50000) * 15;
+    premium -= (coverage.deductible / 500) * 5;
+    // Additional adjustments could be added here...
+    this.finalPremium = Math.max(50, Math.round(premium));
   }
 
-  // Submit the quote (simulate backend integration)
-  submitQuote() {
-    alert(
-      `Quote Submitted!\nFinal Premium: $${this.finalPremium.toFixed(2)}\n\nDetails:\n${JSON.stringify(this.quote, null, 2)}`
-    );
+  submit() {
+    // Final submission logic (e.g., call your API)
+    alert(`Quote Submitted!\nFinal Premium: $${this.finalPremium}\n\nDetails:\n${JSON.stringify(this.getAllFormValues(), null, 2)}`);
+  }
+
+  // Combine all form values into a single object for the review step.
+  getAllFormValues() {
+    return {
+      personal: this.personalForm.value,
+      property: this.propertyForm.value,
+      coverage: this.coverageForm.value,
+      safety: this.safetyForm.value,
+      history: this.historyForm.value
+    };
   }
 }

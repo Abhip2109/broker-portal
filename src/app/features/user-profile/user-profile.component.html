@@ -1,49 +1,56 @@
 <div class="user-profile-container animate__animated animate__fadeIn">
-    <div class="user-card">
-      <h2 class="section-title">User Profile</h2>
-  
-      <div class="avatar-section">
-        <img [src]="previewUrl || 'https://i.pravatar.cc/150?u=user'" class="avatar" alt="User Avatar" />
+  <div class="user-card">
+    <h2 class="section-title">User Profile</h2>
+    <div class="avatar-section">
+      <img [src]="previewUrl || 'https://i.pravatar.cc/150?u=user'" class="avatar" alt="User Avatar" />
+      <div class="upload-button-wrapper">
         <label class="upload-label">
           <input type="file" accept="image/*" (change)="onFileChange($event)" />
           Upload Image
         </label>
       </div>
-  
-      <div class="info-section">
-        <p><strong>Username:</strong> {{ user.username }}</p>
-        <p><strong>Email:</strong> {{ user.email }}</p>
-        <p><strong>Role:</strong> {{ user.role }}</p>
-        <p><strong>Last Login:</strong> {{ user.lastLogin | date:'medium' }}</p>
-      </div>
-  
+    </div>
+    
+
+    <div class="info-section">
+      <p><strong>Full Name:</strong> {{ user.fullName }}</p>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+      <p><strong>Phone:</strong> {{ user.phone }}</p>
+      <p><strong>Last Login:</strong> {{ user.lastLogin | date:'medium' }}</p>
+    </div>
+
+    <div class="button-group">
       <button class="btn" (click)="toggleEdit()">{{ editMode ? 'Cancel' : 'Edit Profile' }}</button>
       <button class="btn outline" (click)="togglePasswordChange()">
         {{ passwordMode ? 'Cancel Password Change' : 'Change Password' }}
       </button>
-  
-      <div *ngIf="editMode" class="edit-form animate__animated animate__fadeInUp">
-        <label>Username:
-          <input type="text" [(ngModel)]="user.username" />
-        </label>
-        <label>Email:
-          <input type="email" [(ngModel)]="user.email" />
-        </label>
-        <button class="btn save" (click)="saveChanges()">Save Changes</button>
-      </div>
-  
-      <div *ngIf="passwordMode" class="edit-form animate__animated animate__fadeInUp">
-        <label>Current Password:
-          <input type="password" [(ngModel)]="user.password" />
-        </label>
-        <label>New Password:
-          <input type="password" [(ngModel)]="user.newPassword" />
-        </label>
-        <label>Confirm Password:
-          <input type="password" [(ngModel)]="user.confirmPassword" />
-        </label>
-        <button class="btn save" (click)="updatePassword()">Update Password</button>
-      </div>
+      <button class="btn danger" (click)="logout()">Logout</button>
+    </div>
+
+    <div *ngIf="editMode" class="edit-form animate__animated animate__fadeInUp">
+      <label>Full Name:
+        <input type="text" [(ngModel)]="user.fullName" />
+      </label>
+      <label>Email:
+        <input type="email" [(ngModel)]="user.email" />
+      </label>
+      <label>Phone:
+        <input type="text" [(ngModel)]="user.phone" />
+      </label>
+      <button class="btn save" (click)="saveChanges()">Save Changes</button>
+    </div>
+
+    <div *ngIf="passwordMode" class="edit-form animate__animated animate__fadeInUp">
+      <label>Current Password:
+        <input type="password" [(ngModel)]="user.password" />
+      </label>
+      <label>New Password:
+        <input type="password" [(ngModel)]="user.newPassword" />
+      </label>
+      <label>Confirm Password:
+        <input type="password" [(ngModel)]="user.confirmPassword" />
+      </label>
+      <button class="btn save" (click)="updatePassword()">Update Password</button>
     </div>
   </div>
-  
+</div>

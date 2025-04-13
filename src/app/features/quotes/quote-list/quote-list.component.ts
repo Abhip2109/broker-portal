@@ -35,20 +35,20 @@ export class QuoteListComponent implements OnInit {
   pageSize = 5;
   currentPage = 1;
 
+  sortField: 'createdDate' | 'premium' = 'createdDate';
+  sortDirection: 'asc' | 'desc' = 'desc';
+
   constructor(private http: HttpClient, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    // Read search query param
     this.route.queryParams.subscribe(params => {
       this.searchTerm = params['search'] || '';
     });
 
-    // Load quotes and apply filter after loading
     this.loadQuotes();
   }
 
   loadQuotes(): void {
-    // Replace with real API call if needed
     this.quotes = [
       {
         id: 1,
@@ -84,15 +84,21 @@ export class QuoteListComponent implements OnInit {
       }
     ];
 
-    // Apply filter after quotes are ready
     this.filterQuotes();
   }
 
   filterQuotes(): void {
-    this.filteredQuotes = this.quotes.filter(q =>
-      (this.selectedStatus ? q.status === this.selectedStatus : true) &&
-      (this.searchTerm ? q.customerName.toLowerCase().includes(this.searchTerm.toLowerCase()) : true)
-    );
+    this.filteredQuotes = this.quotes
+      .filter(q =>
+        (this.selectedStatus ? q.status === this.selectedStatus : true) &&
+        (this.searchTerm ? q.customerName.toLowerCase().includes(this.searchTerm.toLowerCase()) : true)
+      )
+      .sort((a, b) => {
+        const fieldA = this.sortField === 'premium' ? a.premium : new Date(a.createdDate).getTime();
+        const fieldB = this.sortField === 'premium' ? b.premium : new Date(b.createdDate).getTime();
+        return this.sortDirection === 'asc' ? fieldA - fieldB : fieldB - fieldA;
+      });
+
     this.currentPage = 1;
   }
 

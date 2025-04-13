@@ -1,4 +1,3 @@
-// user-profile.component.ts
 import { Component } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -12,9 +11,9 @@ import { FormsModule } from '@angular/forms';
 })
 export class UserProfileComponent {
   user = {
-    username: 'rentguard_user',
+    fullName: 'John Carter',
     email: 'user@rentguard.com',
-    role: 'Broker',
+    phone: '+1 (555) 987-6543',
     lastLogin: new Date(),
     profilePicture: '',
     password: '',
@@ -55,5 +54,11 @@ export class UserProfileComponent {
     }
     alert('Password changed successfully!');
     this.passwordMode = false;
+  }
+
+  logout() {
+    alert('Logged out successfully!');
+    
+    // TODO: Add actual logout logic (e.g., clearing tokens, redirecting)
   }
 }

@@ -1,214 +1,161 @@
-/* Container and layout */
+/* Container */
 .quote-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-}
-
-/* Progress Bar Container */
-.progress-bar-container {
-  width: 100%;
+  margin: 80px auto 40px;
   max-width: 900px;
-  margin-bottom: 1rem;
-  position: relative;
 }
 
-/* Horizontal Steps */
-.progress-steps {
+/* Steps and Progress */
+.steps {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 0.5rem;
-}
-
-/* Individual Step Box */
-.progress-step {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
   position: relative;
-  cursor: pointer;
-  transition: 0.3s;
+  margin-bottom: 20px;
 }
 
-.progress-step:not(:last-child)::after {
-  content: '';
+.step {
+  text-align: center;
+  width: calc(100% / 6);
+}
+
+.circle {
+  width: 32px;
+  height: 32px;
+  margin: 0 auto 4px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  line-height: 32px;
+  color: #1e3a8a;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.step.active .circle {
+  background: #1e40af;
+  color: #fff;
+  transform: scale(1.2);
+}
+
+.label {
+  font-size: 0.85rem;
+  color: #1e3a8a;
+}
+
+.progress-line {
   position: absolute;
-  top: 20px; /* halfway of step index circle */
-  left: calc(100% + 0.5rem);
-  width: 0;
-  height: 0;
-  border-top: 2px solid #dbeafe; /* line color behind fill */
+  top: 14px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #cbd5e1;
   z-index: -1;
 }
 
-.step-index {
-  width: 30px;
-  height: 30px;
-  background: #bfdbfe; /* light blue */
-  color: #1e3a8a; /* darker blue text */
-  border-radius: 9999px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  margin-bottom: 0.3rem;
-  transition: 0.3s;
-}
-
-.step-label {
-  font-size: 0.85rem;
-  color: #1e3a8a;
-  text-align: center;
-}
-
-/* Active Step Styles */
-.progress-step.active .step-index {
-  background: #1e40af; /* deeper blue */
-  color: white;
-  transform: scale(1.1);
-}
-
-/* Progress line behind steps */
-.progress-line {
-  position: relative;
-  width: 100%;
+.fill {
   height: 2px;
-  background-color: #dbeafe; /* pale line */
-  z-index: -2;
-  margin: 0 auto;
-}
-
-/* Filled portion of the progress line */
-.progress-fill {
-  height: 2px;
-  background-color: #1e40af;
+  background: #1e40af;
   transition: width 0.3s ease;
 }
 
-/* The main form box */
+/* Quote Box */
 .quote-box {
-  width: 100%;
-  max-width: 900px;
-  background: white;
-  border-radius: 1.5rem;
+  background: #fff;
+  border-radius: 1rem;
+  padding: 30px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-  transition: all 0.5s ease-in-out;
 }
 
-.form-group {
-  margin-bottom: 1rem;
-}
-
-.form-control {
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #93c5fd;
-  border-radius: 0.5rem;
-  transition: border-color 0.3s;
-}
-
-.form-control:focus {
-  outline: none;
-  border-color: #1e3a8a;
-}
-
-.error {
-  color: red;
-  font-size: 0.85rem;
-  margin-top: 0.3rem;
-}
-
-.btn {
-  padding: 0.6rem 1.2rem;
-  border-radius: 0.75rem;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.btn-primary {
-  background-color: #1e3a8a;
-  color: white;
-}
-
-.btn-primary:hover {
-  background-color: #1e40af;
-}
-
-.btn-secondary {
-  background-color: #e2e8f0;
+/* Headings */
+h2 {
+  margin-bottom: 20px;
   color: #1e3a8a;
 }
 
-.btn-secondary:hover {
-  background-color: #cbd5e1;
+/* Responsive Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
 }
 
-.btn-success {
-  background-color: #059669; /* green */
-  color: white;
-}
-
-.btn-success:hover {
-  background-color: #047857;
-}
-
-.btn-group {
+/* Form Controls */
+label {
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
+  font-size: 0.9rem;
+  color: #334155;
 }
 
-.ml-2 {
-  margin-left: 0.5rem;
+input, select, textarea {
+  padding: 8px;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.5rem;
+  margin-top: 4px;
+  font-size: 0.95rem;
+  transition: border-color 0.3s;
 }
 
-.mt-4 {
-  margin-top: 1rem;
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #1e40af;
 }
 
-/* Coverage & Safety Options Layout */
-.coverage-options,
-.safety-grid {
+small {
+  color: #dc2626;
+  font-size: 0.8rem;
+}
+
+/* Navigation Buttons */
+.nav-buttons {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-top: 0.5rem;
+  justify-content: space-between;
+  margin-top: 20px;
 }
 
-.coverage-options label,
-.safety-grid label {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
+.btn {
+  padding: 10px 20px;
+  border-radius: 0.5rem;
+  font-weight: 600;
   cursor: pointer;
 }
 
-.summary-box {
-  background-color: #f0f9ff;
-  padding: 1rem;
+.btn-primary {
+  background: #1e40af;
+  color: #fff;
+}
+
+.btn-primary:disabled {
+  background: #94a3b8;
+}
+
+.btn-secondary {
+  background: #e2e8f0;
+  color: #1e3a8a;
+}
+
+/* Review Step */
+.review-step {
+  margin-top: 20px;
+}
+
+.summary {
+  background: #f0f9ff;
+  padding: 20px;
   border-radius: 0.75rem;
-  margin-bottom: 1rem;
-  border: 1px solid #bfdbfe;
+  margin-bottom: 20px;
 }
 
-/* Animate.css classes (if using animate.css via CDN or npm) */
-.animate__animated {
-  animation-duration: 0.8s;
-  animation-fill-mode: both;
+.summary h3 {
+  margin-top: 10px;
+  color: #1e3a8a;
 }
 
-.animate__fadeIn {
-  animation-name: fadeIn;
+.summary p {
+  margin: 4px 0;
+  font-size: 0.9rem;
+  color: #334155;
 }
 
-.animate__fadeInUp {
-  animation-name: fadeInUp;
-}
-
-.bg-gradient-to-br {
-  background-image: linear-gradient(to bottom right, #e0f2fe, #ffffff);
+.premium {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #059669;
 }

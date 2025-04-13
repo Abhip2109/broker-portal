@@ -1,38 +1,37 @@
+// login.component.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  email: string = '';
-  password: string = '';
-  isLoading: boolean = false;
-  isRightPanelActive: boolean = false;
+  showPassword = false;
+  email = '';
+  password = '';
+  rememberMe = false;
 
   constructor(private router: Router) {}
 
-  onLogin() {
-    this.isLoading = true;
-    // Simulate a login request
-    setTimeout(() => {
-      this.isLoading = false;
-      alert('Login Successful!');
-      this.router.navigate(['/quotes']);
-    }, 2000);
+  togglePassword() {
+    this.showPassword = !this.showPassword;
   }
 
-  onSignUpClick() {
-    this.isRightPanelActive = true;
+  submitForm() {
+    if (!this.email || !this.password) {
+      alert('Please enter valid credentials.');
+      return;
+    }
+    alert(`Logged in as ${this.email}`);
   }
 
-  onSignInClick() {
-    this.isRightPanelActive = false;
+  navigateToRegister() {
+    this.router.navigate(['/register']);
   }
 }

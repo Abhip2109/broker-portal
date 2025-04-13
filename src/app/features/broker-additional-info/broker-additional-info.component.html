@@ -1,0 +1,54 @@
+<!-- broker-additional-info.component.html -->
+<div class="broker-info-container animate__animated animate__fadeIn">
+    <div class="broker-info-card">
+      <h2 class="info-title">Complete Your Broker Profile</h2>
+  
+      <form #brokerForm="ngForm" (ngSubmit)="submitBrokerInfo()">
+        <!-- Profile Picture Upload -->
+        <div class="form-group center">
+          <input type="file" accept="image/*" (change)="onFileChange($event)" hidden #fileInput>
+          <div class="profile-pic-preview" (click)="fileInput.click()">
+            <img *ngIf="avatarPreview" [src]="avatarPreview" alt="Profile Preview" class="avatar-preview" />
+            <span *ngIf="!avatarPreview">Upload Profile Picture</span>
+          </div>
+        </div>
+  
+        <!-- Phone -->
+        <div class="form-group">
+          <label for="phone">Phone</label>
+          <input
+            id="phone"
+            type="text"
+            [(ngModel)]="broker.phone"
+            name="phone"
+            placeholder="Enter your phone number"
+            required
+          />
+        </div>
+  
+        <!-- Bio -->
+        <div class="form-group">
+          <label for="bio">Short Bio</label>
+          <textarea id="bio" [(ngModel)]="broker.bio" name="bio" placeholder="Tell us about yourself" rows="3" required></textarea>
+        </div>
+  
+        <!-- Skills -->
+        <div class="form-group">
+          <label for="skills">Skills (comma-separated)</label>
+          <input id="skills" type="text" [(ngModel)]="broker.skills" name="skills" placeholder="e.g., Negotiation, Underwriting" required />
+        </div>
+  
+        <!-- Certifications -->
+        <div class="form-group">
+          <label for="certifications">Certifications (comma-separated)</label>
+          <input id="certifications" type="text" [(ngModel)]="broker.certifications" name="certifications" placeholder="e.g., CIC, CISR" required />
+        </div>
+  
+        <!-- Submit Button -->
+        <button class="submit-btn gradient" type="submit" [disabled]="brokerForm.invalid">
+          Save Profile
+        </button>
+      </form>
+    </div>
+  </div>
+  
